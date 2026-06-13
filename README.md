@@ -27,6 +27,7 @@ npm run preview
 | Тексты интерфейса | `src/i18n/locales/ru.js`, `en.js`, `sr.js` |
 | Ссылки Instagram / Telegram | `src/data/site.js` |
 | Фото галереи | `public/assets/instagram/` + `posts.json` |
+| Фото для parallax (HQ) | `public/assets/instagram/parallax/` — обновить: `npm run fetch:parallax` |
 | Hero / About фото | `public/images/hero-table.webp`, `about-chef.webp` |
 | Превью для ссылок (OG) | `public/images/og.jpg` — пересобрать: `npm run generate:og` |
 

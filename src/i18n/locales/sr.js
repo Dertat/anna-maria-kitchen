@@ -28,7 +28,6 @@ export default {
     menuAria: 'Meni',
   },
   hero: {
-    badge: 'Beograd · dostava svaka 2 dana',
     title: 'Domaća kuhinja bez kuvanja',
     subtitle:
       'Obroci na 2, 6, 12 ili 18 dana — od 2000 RSD/dan. Sve pripremamo sami — bez poluproizvoda, sa sopstvenom pekarom i potpunom kontrolom kvaliteta.',
@@ -43,7 +42,7 @@ export default {
   },
   menu: {
     eyebrow: 'Nedeljni meni',
-    subtitle: 'Menja se svake nedelje. Aktuelno na Instagramu.',
+    subtitle: 'Aktuelni meni se menja svake nedelje.',
     label: 'Meni',
   },
   about: {

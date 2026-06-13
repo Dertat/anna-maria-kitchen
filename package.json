@@ -8,12 +8,15 @@
     "start": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "generate:og": "node scripts/generate-og.mjs"
+    "generate:og": "node scripts/generate-og.mjs",
+    "fetch:parallax": "node scripts/fetch-parallax-images.mjs",
+    "import:gallery": "node scripts/import-gallery-images.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.40.0",
     "gsap": "^3.12.5",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",

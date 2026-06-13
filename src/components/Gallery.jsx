@@ -1,14 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Instagram } from 'lucide-react';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { ZoomParallax } from '@/components/ZoomParallax';
 import { LINKS } from '@/data/site';
 import { useLanguage } from '@/i18n/LanguageProvider';
 
-const GALLERY_SPANS = {
-  'post-03.webp': 'row-span-2',
-  'post-07.webp': 'row-span-2',
-  'post-09.webp': 'row-span-2',
-};
+const GALLERY_LIMIT = 16;
 
 export function Gallery() {
   const { t, locale } = useLanguage();
@@ -23,12 +20,21 @@ export function Gallery() {
           .map((post) => ({
             ...post,
             alt: post.captions?.[locale] ?? post.caption ?? 'Anna-Maria kitchen',
-            span: GALLERY_SPANS[post.file] ?? '',
           }));
         setPosts(galleryPosts);
       })
       .catch(() => setPosts([]));
   }, [locale]);
+
+  const parallaxImages = useMemo(
+    () =>
+      posts.slice(0, GALLERY_LIMIT).map((post) => ({
+        src: `/assets/instagram/parallax/${post.file}`,
+        fallback: `/assets/instagram/${post.file}`,
+        alt: post.alt,
+      })),
+    [posts],
+  );
 
   return (
     <section id="gallery" className="bg-secondary/50 py-20 lg:py-28">
@@ -44,34 +50,15 @@ export function Gallery() {
             {t('gallery.subtitle')}
           </p>
         </ScrollReveal>
+      </div>
 
-        {posts.length > 0 && (
-          <ScrollReveal
-            stagger
-            className="mt-14 grid auto-rows-[220px] grid-cols-2 gap-4 lg:grid-cols-3"
-          >
-            {posts.map((post) => (
-              <a
-                key={post.file}
-                href={post.url}
-                target="_blank"
-                rel="noopener"
-                className={`group relative overflow-hidden rounded-premium border border-border ${post.span}`}
-              >
-                <img
-                  src={`/assets/instagram/${post.file}`}
-                  alt={post.alt}
-                  className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-primary/80 via-primary/20 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <p className="text-sm leading-snug text-primary-foreground">{post.alt}</p>
-                </div>
-              </a>
-            ))}
-          </ScrollReveal>
-        )}
+      {parallaxImages.length > 0 && (
+        <div className="mt-14">
+          <ZoomParallax images={parallaxImages} />
+        </div>
+      )}
 
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <ScrollReveal className="mt-10 flex justify-center">
           <a
             href={LINKS.instagram}

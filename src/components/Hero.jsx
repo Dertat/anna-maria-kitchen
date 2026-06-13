@@ -10,9 +10,6 @@ export function Hero() {
     <section className="relative overflow-hidden">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 py-16 lg:grid-cols-2 lg:gap-8 lg:px-8 lg:py-24">
         <ScrollReveal className="flex flex-col gap-6" stagger>
-          <span className="inline-flex w-fit items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            {t('hero.badge')}
-          </span>
           <h1 className="text-balance font-serif text-5xl font-semibold leading-[1.05] text-primary sm:text-6xl lg:text-7xl">
             {t('hero.title')}
           </h1>

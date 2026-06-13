@@ -189,6 +189,21 @@
 .scroll-reveal-stagger.is-visible > *:nth-child(8) { transition-delay: 560ms; }
 .scroll-reveal-stagger.is-visible > *:nth-child(9) { transition-delay: 640ms; }
 
+/* ── Gallery cards ── */
+.gallery-card-frame {
+  box-shadow:
+    0 14px 32px -10px rgba(15, 28, 46, 0.2),
+    0 4px 10px -4px rgba(15, 28, 46, 0.1);
+}
+
+.dark .gallery-card-frame {
+  border-color: oklch(0.93 0.018 85 / 10%);
+  box-shadow:
+    0 20px 40px -8px rgba(0, 0, 0, 0.62),
+    0 6px 14px -4px rgba(0, 0, 0, 0.38),
+    inset 0 1px 0 oklch(0.93 0.018 85 / 6%);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .scroll-reveal,
   .scroll-reveal-stagger > * {

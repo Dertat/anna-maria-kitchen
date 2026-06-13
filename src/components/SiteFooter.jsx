@@ -70,31 +70,27 @@ export function SiteFooter() {
               <h3 className="text-sm font-semibold uppercase tracking-wider text-primary">
                 {t('footer.contacts')}
               </h3>
-              <ul className="mt-4 flex flex-col gap-3 text-sm text-muted-foreground">
-                <li>
-                  <a
-                    href={LINKS.instagram}
-                    target="_blank"
-                    rel="noopener"
-                    className="inline-flex items-center gap-2 transition-colors hover:text-primary"
-                  >
-                    <Instagram className="size-4 shrink-0" />
-                    @{LINKS.instagramUsername}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={LINKS.telegram}
-                    target="_blank"
-                    rel="noopener"
-                    className="inline-flex items-center gap-2 transition-colors hover:text-primary"
-                  >
-                    <TelegramIcon className="size-4 shrink-0" />
-                    @{LINKS.telegramUsername}
-                  </a>
-                </li>
-                <li>{t('footer.city')}</li>
-              </ul>
+              <div className="mt-4 flex items-center gap-3">
+                <a
+                  href={LINKS.instagram}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Instagram"
+                  className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:text-primary"
+                >
+                  <Instagram className="size-4 shrink-0" />
+                </a>
+                <a
+                  href={LINKS.telegram}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Telegram"
+                  className="inline-flex size-10 items-center justify-center rounded-full border border-border bg-card text-foreground transition-colors hover:text-primary"
+                >
+                  <TelegramIcon className="size-4 shrink-0" />
+                </a>
+              </div>
+              <p className="mt-3 text-sm text-muted-foreground">{t('footer.city')}</p>
             </div>
           </div>
         </div>

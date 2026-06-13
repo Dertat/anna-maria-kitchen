@@ -28,7 +28,6 @@ export default {
     menuAria: 'Menu',
   },
   hero: {
-    badge: 'Belgrade · delivery every 2 days',
     title: 'Home cooking without the cooking',
     subtitle:
       'Meal plans for 2, 6, 12, or 18 days — from 2000 RSD/day. We cook everything ourselves — no ready-made products, with our own bakery and full quality control.',
@@ -43,7 +42,7 @@ export default {
   },
   menu: {
     eyebrow: 'Weekly menu',
-    subtitle: 'Updated every week. See the latest on Instagram.',
+    subtitle: 'The current menu is updated every week.',
     label: 'Menu',
   },
   about: {
