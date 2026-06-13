@@ -1,12 +1,34 @@
 const GA_ID = import.meta.env.VITE_GA_ID;
+const GOOGLE_ADS_ID = import.meta.env.VITE_GOOGLE_ADS_ID;
+const GOOGLE_ADS_LEAD_LABEL = import.meta.env.VITE_GOOGLE_ADS_LEAD_LABEL;
 
 export function isAnalyticsEnabled() {
   return Boolean(GA_ID && typeof window !== 'undefined');
 }
 
+export function isGoogleAdsEnabled() {
+  return Boolean(GOOGLE_ADS_ID && typeof window !== 'undefined');
+}
+
+export function getGoogleAdsLeadSendTo() {
+  if (!GOOGLE_ADS_ID || !GOOGLE_ADS_LEAD_LABEL) return null;
+  return `${GOOGLE_ADS_ID}/${GOOGLE_ADS_LEAD_LABEL}`;
+}
+
 export function trackEvent(name, params = {}) {
-  if (!isAnalyticsEnabled() || typeof window.gtag !== 'function') return;
+  if (typeof window.gtag !== 'function') return;
+  if (!isAnalyticsEnabled() && !isGoogleAdsEnabled()) return;
   window.gtag('event', name, params);
+}
+
+export function trackGoogleAdsLeadConversion(params = {}) {
+  const sendTo = getGoogleAdsLeadSendTo();
+  if (!sendTo || typeof window.gtag !== 'function') return;
+
+  window.gtag('event', 'conversion', {
+    send_to: sendTo,
+    ...params,
+  });
 }
 
 export function trackSectionView(sectionId) {

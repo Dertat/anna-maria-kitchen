@@ -7,7 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { LINKS, telegramOrderUrl } from '@/data/site';
 import { useLanguage } from '@/i18n/LanguageProvider';
-import { trackEvent } from '@/lib/analytics';
+import { trackEvent, trackGoogleAdsLeadConversion } from '@/lib/analytics';
 import { consumePresetService } from '@/lib/storageKeys';
 
 export function Contact() {
@@ -59,21 +59,23 @@ export function Contact() {
       .filter(Boolean)
       .join('\n');
 
+    const trackLead = () => {
+      trackEvent('generate_lead', {
+        service: form.service,
+        method: 'telegram',
+      });
+      trackGoogleAdsLeadConversion({ value: 1.0, currency: 'RSD' });
+    };
+
     const url = telegramOrderUrl(text);
     const opened = window.open(url, '_blank');
 
     if (opened) {
-      trackEvent('generate_lead', {
-        service: form.service,
-        method: 'telegram',
-      });
+      trackLead();
       toast.success(t('contact.toastSuccess'));
       setForm({ name: '', contact: '', service: '', message: '' });
     } else {
-      trackEvent('generate_lead', {
-        service: form.service,
-        method: 'telegram',
-      });
+      trackLead();
       window.location.href = url;
     }
   };

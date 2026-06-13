@@ -44,7 +44,9 @@ Push в `main` → автодеплой. Конфиг: `render.yaml`.
 | Переменная | Назначение |
 |------------|------------|
 | `VITE_SITE_URL` | Публичный URL (для canonical, OG, sitemap). При своём домене — обновить здесь |
-| `VITE_GA_ID` | Google Analytics 4, например `G-XXXXXXXXXX` (опционально) |
+| `VITE_GA_ID` | Google Analytics 4 (`G-D1SNVZYBNF`) |
+| `VITE_GOOGLE_ADS_ID` | Google Ads ID (`AW-XXXXXXXXXX`) |
+| `VITE_GOOGLE_ADS_LEAD_LABEL` | Метка конверсии «Заявка» из Google Ads |
 
 ## Аналитика (Google Analytics 4)
 
@@ -93,3 +95,41 @@ npm run dev
 | `generate_lead` | Отправка формы → Telegram |
 | `language_change` | Смена языка RU/EN/SR |
 | `click` (outbound) | Клик на Instagram / Telegram |
+
+## Google Реклама
+
+### Шаг 1 — Аккаунт и связка с GA4
+
+1. Откройте [ads.google.com](https://ads.google.com/) → создайте аккаунт (валюта **RSD** или **EUR**)
+2. **Инструменты** → **Менеджер данных** → **Связанные продукты** → **Google Аналитика**
+3. Свяжите свойство GA4 (`G-D1SNVZYBNF`) с аккаунтом Google Ads
+4. В Google Ads: **Цели** → **Конверсии** → **Импорт** → **Google Analytics 4** → событие **`generate_lead`**
+
+### Шаг 2 — Тег конверсии на сайте
+
+1. Google Ads → **Цели** → **Конверсии** → **+ Создать** → **Сайт**
+2. Категория: **Потенциальный клиент**, название: `Заявка с сайта`
+3. Скопируйте **ID** (`AW-XXXXXXXXXX`) и **метку конверсии**
+4. Добавьте в Render → **Environment**:
+
+| Key | Value |
+|-----|-------|
+| `VITE_GOOGLE_ADS_ID` | `AW-XXXXXXXXXX` |
+| `VITE_GOOGLE_ADS_LEAD_LABEL` | метка конверсии |
+
+### Шаг 3 — Первая кампания (Поиск)
+
+| Параметр | Значение |
+|----------|----------|
+| Тип | **Поиск** |
+| Цель | Конверсия `Заявка` / `generate_lead` |
+| Гео | **Белград** + 15–20 км |
+| Языки | Русский, Сербский, Английский |
+| URL | `https://anna-maria-kitchen.onrender.com` |
+| Бюджет | **500–1000 RSD/день** для старта |
+
+**Ключевые слова:** `доставка готовой еды белград`, `готовая еда белград`, `meal prep belgrade`, `dostava hrane beograd`
+
+**Минус-слова:** `рецепт`, `бесплатно`, `работа`, `вакансия`
+
+**Объявление (RU):** Заголовки — `Доставка еды · Белград` / `Рационы 2–18 дней`. Описание — `Готовим сами. От 2000 RSD/день. Пробные 2 дня.`

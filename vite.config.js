@@ -2,26 +2,38 @@ import path from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-function injectGoogleAnalytics() {
+function injectGoogleTags() {
   return {
-    name: 'inject-google-analytics',
+    name: 'inject-google-tags',
     transformIndexHtml(html) {
-      const id = process.env.VITE_GA_ID;
-      if (!id) return html;
+      const gaId = process.env.VITE_GA_ID;
+      const adsId = process.env.VITE_GOOGLE_ADS_ID;
+      if (!gaId && !adsId) return html;
+
+      const primaryId = gaId || adsId;
+      const configs = [];
+
+      if (gaId) {
+        configs.push(`gtag('config', '${gaId}', {
+        anonymize_ip: true,
+        send_page_view: true,
+        debug_mode: new URLSearchParams(location.search).has('ga_debug'),
+      });`);
+      }
+
+      if (adsId) {
+        configs.push(`gtag('config', '${adsId}');`);
+      }
 
       const snippet = `
     <link rel="preconnect" href="https://www.googletagmanager.com" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=${id}"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=${primaryId}"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       window.gtag = gtag;
       gtag('js', new Date());
-      gtag('config', '${id}', {
-        anonymize_ip: true,
-        send_page_view: true,
-        debug_mode: new URLSearchParams(location.search).has('ga_debug'),
-      });
+      ${configs.join('\n      ')}
     </script>`;
 
       return html.replace('</head>', `${snippet}\n  </head>`);
@@ -30,7 +42,7 @@ function injectGoogleAnalytics() {
 }
 
 export default defineConfig({
-  plugins: [react(), injectGoogleAnalytics()],
+  plugins: [react(), injectGoogleTags()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
