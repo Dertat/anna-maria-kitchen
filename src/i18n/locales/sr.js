@@ -114,7 +114,7 @@ export default {
   gallery: {
     eyebrow: 'Galerija',
     title: 'Naša kuhinja',
-    subtitle: 'Fotografije jela sa Instagrama — sve pripremamo sami.',
+    subtitle: 'Prava jela iz naše kuhinje — sve pripremamo sami, bez poluproizvoda.',
     instagramCta: '@anna_maria.kitchen na Instagramu →',
   },
   contact: {

@@ -3,6 +3,43 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 import { cn } from '@/lib/utils';
 
 const MAX_IMAGES = 16;
+const SPREAD_SCROLL_START = 0.08;
+const SPREAD_SCROLL_END = 0.78;
+const STAGGER_STEP = 0.03;
+
+function easeOutCubic(t) {
+  return 1 - (1 - t) ** 3;
+}
+
+function easeOutBack(t) {
+  const c1 = 1.70158;
+  const c3 = c1 + 1;
+  return 1 + c3 * (t - 1) ** 3 + c1 * (t - 1) ** 2;
+}
+
+function lerp(from, to, progress) {
+  return from + (to - from) * progress;
+}
+
+function getFlyProgress(scroll, index) {
+  const start = SPREAD_SCROLL_START + index * STAGGER_STEP;
+  const end = SPREAD_SCROLL_END;
+
+  if (scroll <= start) return 0;
+  if (scroll >= end) return 1;
+
+  return easeOutCubic((scroll - start) / (end - start));
+}
+
+function getSpinBoost(index, progress) {
+  if (progress <= 0 || progress >= 1) return 0;
+  return Math.sin(progress * Math.PI) * (index % 2 === 0 ? 10 : -10);
+}
+
+function getScalePop(progress) {
+  if (progress <= 0 || progress >= 1) return 0;
+  return Math.sin(progress * Math.PI) * 0.055;
+}
 
 // Финальные позиции: хаос, но внутри экрана (vw/vh от центра, градусы)
 const SPREAD_POSITIONS = [
@@ -41,22 +78,29 @@ function ParallaxLayer({ image, index, scrollYProgress }) {
   const stack = getStackPosition(index);
   const spread = SPREAD_POSITIONS[index] ?? SPREAD_POSITIONS[0];
 
-  const x = useTransform(
-    scrollYProgress,
-    [0, 0.48],
-    [`${stack.x}vw`, `${spread.x}vw`],
-  );
-  const y = useTransform(
-    scrollYProgress,
-    [0, 0.48],
-    [`${stack.y}vh`, `${spread.y}vh`],
-  );
-  const rotate = useTransform(
-    scrollYProgress,
-    [0, 0.48],
-    [stack.rotate, spread.rotate],
-  );
-  const scale = useTransform(scrollYProgress, [0, 0.48, 1], [0.94, 1, 1.06]);
+  const flyProgress = useTransform(scrollYProgress, (scroll) => getFlyProgress(scroll, index));
+
+  const x = useTransform(flyProgress, (progress) => {
+    const eased = easeOutCubic(progress);
+    return `${lerp(stack.x, spread.x, eased)}vw`;
+  });
+  const y = useTransform(flyProgress, (progress) => {
+    const eased = easeOutCubic(progress);
+    return `${lerp(stack.y, spread.y, eased)}vh`;
+  });
+  const rotate = useTransform(flyProgress, (progress) => {
+    const eased = easeOutBack(Math.min(1, progress));
+    return lerp(stack.rotate, spread.rotate, eased) + getSpinBoost(index, progress);
+  });
+  const scale = useTransform(scrollYProgress, (scroll) => {
+    const fly = getFlyProgress(scroll, index);
+    const spreadScale = lerp(0.94, 1, easeOutBack(Math.min(1, fly))) + getScalePop(fly);
+
+    if (scroll <= SPREAD_SCROLL_END) return spreadScale;
+
+    const zoom = ((scroll - SPREAD_SCROLL_END) / (1 - SPREAD_SCROLL_END)) * 0.06;
+    return 1 + zoom;
+  });
   const layerZ = index + 1;
   const layerDepth = index * 2;
 
@@ -131,7 +175,7 @@ export function ZoomParallax({ images }) {
   }
 
   return (
-    <div ref={containerRef} className="relative h-[300vh]">
+    <div ref={containerRef} className="relative h-[440vh]">
       <div className="sticky top-0 isolate flex h-screen items-center justify-center overflow-hidden bg-background [perspective:1400px] [transform-style:preserve-3d]">
         {layers.map((image, index) => (
           <ParallaxLayer

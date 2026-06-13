@@ -114,7 +114,7 @@ export default {
   gallery: {
     eyebrow: 'Gallery',
     title: 'Our kitchen',
-    subtitle: 'Food photos from Instagram — we cook everything ourselves.',
+    subtitle: 'Real dishes from our kitchen — everything made in-house, no shortcuts.',
     instagramCta: '@anna_maria.kitchen on Instagram →',
   },
   contact: {
