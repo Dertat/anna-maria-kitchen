@@ -49,7 +49,7 @@ export function SiteHeader() {
             href={LINKS.telegram}
             target="_blank"
             rel="noopener"
-            className={buttonVariants({ variant: 'outline', className: 'rounded-full px-5' })}
+            className={buttonVariants({ variant: 'accent', className: 'rounded-full px-5' })}
           >
             {t('nav.telegram')}
           </a>
@@ -88,7 +88,7 @@ export function SiteHeader() {
                 target="_blank"
                 rel="noopener"
                 onClick={() => setOpen(false)}
-                className={buttonVariants({ variant: 'outline', className: 'rounded-full' })}
+                className={buttonVariants({ variant: 'accent', className: 'rounded-full' })}
               >
                 {t('nav.telegram')}
               </a>

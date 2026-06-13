@@ -30,8 +30,8 @@ export function Hero() {
               href="#menu"
               className={buttonVariants({
                 size: 'lg',
-                variant: 'outline',
-                className: 'rounded-full border-primary/30 px-8 text-primary hover:bg-secondary',
+                variant: 'accent',
+                className: 'rounded-full px-8',
               })}
             >
               {t('hero.ctaMenu')}
