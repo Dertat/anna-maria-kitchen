@@ -4,6 +4,7 @@ export default {
     title: 'Anna-Maria Kitchen — Dostava hrane · Beograd',
     description:
       'Dostava gotove hrane u Beogradu. Obroci na 6, 12 i 18 dana. Ketering. Poručite preko Direct-a ili Telegrama.',
+    ogLocale: 'sr_RS',
   },
   theme: {
     light: 'Svetla tema',
@@ -40,64 +41,6 @@ export default {
     eyebrow: 'Nedeljni meni',
     subtitle: 'Menja se svake nedelje. Aktuelno na Instagramu.',
     label: 'Meni',
-    period: '15.06 – 20.06',
-    days: [
-      {
-        day: 'Ponedeljak',
-        items: [
-          'Burger sa pilećim fileom',
-          'Krem sir sa bobicama',
-          'Farfale sa ćuftama od govedine',
-          'Bowl sa leblebijama, avokadom, krastavcem i maslinovim uljem',
-        ],
-      },
-      {
-        day: 'Utorak',
-        items: [
-          'Palačinka od sira sa trešnjama',
-          'Ečpočmak',
-          'Pljeskavice od pilećih grudi sa pireom',
-          'Drajnici sa pečurkama i pavlakom',
-        ],
-      },
-      {
-        day: 'Sreda',
-        items: [
-          'Avokado tost sa poširanim jajetom',
-          'Salata od paradajza sa maslinovim uljem',
-          'Pečena pileća batak sa povrćem',
-          'Špagete bolonjeze',
-        ],
-      },
-      {
-        day: 'Četvrtak',
-        items: [
-          'Pirinačna mlečna kaša sa mangom',
-          'Slano kiseli krastavci',
-          'Boršč sa govedinom',
-          'Losos sa pireom',
-        ],
-      },
-      {
-        day: 'Petak',
-        items: [
-          'Sendvič sa lososom i krem sirom',
-          'Kremasti mus od bobica',
-          'Piletina u krem sosu sa pirinčem i brokolijem',
-          'Salata od štapića krabe',
-        ],
-      },
-      {
-        day: 'Subota',
-        items: [
-          'Syrnici sa kondenzovanim mlekom',
-          'Kobasica u testu',
-          'Pileća supa sa ćuftama',
-          'Šnicla od pilećih grudi sa povrćem',
-          'Čokoladna torta «Praga»',
-        ],
-      },
-    ],
   },
   about: {
     eyebrow: 'O nama',
@@ -167,7 +110,7 @@ export default {
     eyebrow: 'Kontakt',
     title: 'Naručite',
     subtitle:
-      'Odgovaramo u roku od jednog dana. Pišite u Direct ili ostavite zahtev — tekst će se automatski kopirati.',
+      'Odgovaramo u roku od jednog dana. Popunite formu — otvorićemo Telegram sa spremnim tekstom zahteva.',
     location: 'Beograd · dostava svaka 2 dana',
     name: 'Ime',
     namePlaceholder: 'Vaše ime',
@@ -176,7 +119,7 @@ export default {
     service: 'Usluga',
     message: 'Komentar',
     messagePlaceholder: 'Želje, alergije, datum',
-    submit: 'Pošalji zahtev',
+    submit: 'Pošalji preko Telegrama',
     serviceOptions: [
       { value: '', label: 'Izaberite' },
       { value: '2', label: '2 probna dana' },
@@ -190,8 +133,7 @@ export default {
     formContact: 'Kontakt',
     formService: 'Usluga',
     formMessage: 'Poruka',
-    toastSuccess: 'Zahtev je kopiran! Nalepite u Instagram Direct.',
-    alertCopy: 'Kopirajte i pošaljite u Direct:',
+    toastSuccess: 'Telegram je otvoren — pošaljite poruku.',
   },
   footer: {
     tagline: 'Dostava gotove hrane u Beogradu. Obroci na 6, 12 i 18 dana.',

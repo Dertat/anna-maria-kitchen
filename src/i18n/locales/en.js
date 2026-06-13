@@ -4,6 +4,7 @@ export default {
     title: 'Anna-Maria Kitchen — Meal Delivery · Belgrade',
     description:
       'Ready-made meal delivery in Belgrade. Meal plans for 6, 12, and 18 days. Catering. Order via Direct or Telegram.',
+    ogLocale: 'en_US',
   },
   theme: {
     light: 'Light theme',
@@ -40,64 +41,6 @@ export default {
     eyebrow: 'Weekly menu',
     subtitle: 'Updated every week. See the latest on Instagram.',
     label: 'Menu',
-    period: '15.06 – 20.06',
-    days: [
-      {
-        day: 'Monday',
-        items: [
-          'Chicken fillet burger',
-          'Cream cheese with berries',
-          'Farfalle with beef meatballs',
-          'Bowl with chickpeas, avocado, cucumber and olive oil',
-        ],
-      },
-      {
-        day: 'Tuesday',
-        items: [
-          'Cottage cheese casserole with cherries',
-          'Echpochmak',
-          'Chicken breast cutlets with mashed potatoes',
-          'Potato pancakes with mushrooms and sour cream',
-        ],
-      },
-      {
-        day: 'Wednesday',
-        items: [
-          'Avocado toast with poached egg',
-          'Tomato salad with olive oil',
-          'Baked chicken thighs with vegetables',
-          'Spaghetti Bolognese',
-        ],
-      },
-      {
-        day: 'Thursday',
-        items: [
-          'Rice milk porridge with mango',
-          'Lightly salted cucumbers',
-          'Beef borscht',
-          'Salmon steak with mashed potatoes',
-        ],
-      },
-      {
-        day: 'Friday',
-        items: [
-          'Salmon and cream cheese sandwich',
-          'Creamy berry mousse',
-          'Chicken in cream sauce with rice and broccoli',
-          'Crab stick salad',
-        ],
-      },
-      {
-        day: 'Saturday',
-        items: [
-          'Syrniki with condensed milk',
-          'Sausage in pastry',
-          'Chicken broth with meatballs',
-          'Chicken breast schnitzel with vegetables',
-          'Prague chocolate cake',
-        ],
-      },
-    ],
   },
   about: {
     eyebrow: 'About',
@@ -167,7 +110,7 @@ export default {
     eyebrow: 'Contact',
     title: 'Place an order',
     subtitle:
-      'We will reply within a day. Message us on Direct or leave a request — the text will be copied automatically.',
+      'We reply within a day. Fill out the form — we will open Telegram with your request ready to send.',
     location: 'Belgrade · delivery every 2 days',
     name: 'Name',
     namePlaceholder: 'Your name',
@@ -176,7 +119,7 @@ export default {
     service: 'Service',
     message: 'Comment',
     messagePlaceholder: 'Preferences, allergies, date',
-    submit: 'Send request',
+    submit: 'Send via Telegram',
     serviceOptions: [
       { value: '', label: 'Select' },
       { value: '2', label: '2-day trial' },
@@ -190,8 +133,7 @@ export default {
     formContact: 'Contact',
     formService: 'Service',
     formMessage: 'Message',
-    toastSuccess: 'Request copied! Paste it into Instagram Direct.',
-    alertCopy: 'Copy and send in Direct:',
+    toastSuccess: 'Telegram opened — send the message.',
   },
   footer: {
     tagline: 'Ready-made meal delivery in Belgrade. Meal plans for 6, 12, and 18 days.',

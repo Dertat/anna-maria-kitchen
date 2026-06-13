@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Toaster } from 'sonner';
+import { Analytics } from './components/Analytics';
 import { BackToTop } from './components/BackToTop';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
@@ -32,6 +33,7 @@ export default function App() {
 
   return (
     <>
+      <Analytics />
       {showCurtain && (
         <Curtain onReady={onIntroReady} onRemoved={onCurtainRemoved} />
       )}

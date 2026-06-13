@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { SITE } from '@/data/site';
 import en from './locales/en';
 import ru from './locales/ru';
 import sr from './locales/sr';
@@ -20,6 +21,36 @@ function detectLocale() {
   if (SUPPORTED.includes(browser)) return browser;
 
   return 'ru';
+}
+
+function setMetaName(name, content) {
+  let el = document.querySelector(`meta[name="${name}"]`);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute('name', name);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+}
+
+function setMetaProperty(property, content) {
+  let el = document.querySelector(`meta[property="${property}"]`);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute('property', property);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+}
+
+function setCanonical(url) {
+  let el = document.querySelector('link[rel="canonical"]');
+  if (!el) {
+    el = document.createElement('link');
+    el.setAttribute('rel', 'canonical');
+    document.head.appendChild(el);
+  }
+  el.setAttribute('href', url);
 }
 
 function getByPath(obj, path) {
@@ -48,8 +79,16 @@ export function LanguageProvider({ children }) {
     document.documentElement.lang = messages.meta.lang;
     document.title = messages.meta.title;
 
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', messages.meta.description);
+    setMetaName('description', messages.meta.description);
+    setMetaProperty('og:title', messages.meta.title);
+    setMetaProperty('og:description', messages.meta.description);
+    setMetaProperty('og:url', SITE.url);
+    setMetaProperty('og:image', `${SITE.url}/images/hero-table.png`);
+    setMetaProperty('og:locale', messages.meta.ogLocale);
+    setMetaName('twitter:title', messages.meta.title);
+    setMetaName('twitter:description', messages.meta.description);
+    setMetaName('twitter:image', `${SITE.url}/images/hero-table.png`);
+    setCanonical(SITE.url);
   }, [messages]);
 
   const t = useCallback(

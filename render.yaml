@@ -7,6 +7,12 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22"
+      # Public site URL — update when adding a custom domain in Render Dashboard
+      - key: VITE_SITE_URL
+        value: https://anna-maria-kitchen.onrender.com
+      # Optional: Google Analytics 4 measurement ID (e.g. G-XXXXXXXXXX)
+      # - key: VITE_GA_ID
+      #   value: ""
     routes:
       - type: rewrite
         source: /*

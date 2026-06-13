@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { LINKS } from '@/data/site';
+import { LINKS, telegramOrderUrl } from '@/data/site';
 import { useLanguage } from '@/i18n/LanguageProvider';
 
 export function Contact() {
@@ -40,22 +40,14 @@ export function Contact() {
       .filter(Boolean)
       .join('\n');
 
-    const openIg = () => window.open(LINKS.instagram, '_blank');
+    const url = telegramOrderUrl(text);
+    const opened = window.open(url, '_blank');
 
-    const onCopied = () => {
+    if (opened) {
       toast.success(t('contact.toastSuccess'));
-      openIg();
       setForm({ name: '', contact: '', service: '', message: '' });
-    };
-
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).then(onCopied).catch(() => {
-        alert(`${t('contact.alertCopy')}\n\n${text}`);
-        openIg();
-      });
     } else {
-      alert(`${t('contact.alertCopy')}\n\n${text}`);
-      openIg();
+      window.location.href = url;
     }
   };
 

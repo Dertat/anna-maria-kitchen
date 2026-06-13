@@ -1,3 +1,4 @@
+import { WEEKLY_MENU } from '@/data/weeklyMenu';
 import { LINKS } from '@/data/site';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { useLanguage } from '@/i18n/LanguageProvider';
@@ -16,8 +17,8 @@ function MenuDay({ day, items, withBorder }) {
 }
 
 export function WeeklyMenu() {
-  const { t, messages } = useLanguage();
-  const menuDays = messages.menu.days;
+  const { t, locale } = useLanguage();
+  const menuDays = WEEKLY_MENU[locale] ?? WEEKLY_MENU.ru;
   const rows = [
     [menuDays[0], menuDays[1]],
     [menuDays[2], menuDays[3]],
@@ -47,7 +48,7 @@ export function WeeklyMenu() {
         <ScrollReveal variant="scale" className="menu-board mx-auto mt-12 max-w-5xl">
           <header className="menu-board__head">
             <p className="menu-board__label">{t('menu.label')}</p>
-            <p className="menu-board__period">{t('menu.period')}</p>
+            <p className="menu-board__period">{WEEKLY_MENU.period}</p>
             <div className="menu-board__line" aria-hidden="true" />
           </header>
 
