@@ -70,7 +70,7 @@ export function SiteHeader() {
       </div>
 
       {open && (
-        <div className="border-t border-border/60 bg-background md:hidden">
+        <div className="border-t border-border/60 bg-background md:hidden overflow-visible">
           <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-6 py-4">
             {navKeys.map((link) => (
               <a
@@ -100,9 +100,9 @@ export function SiteHeader() {
                 {t('nav.order')}
               </a>
             </div>
-            <div className="mt-2 flex items-center gap-2">
+            <div className="mt-2 grid grid-cols-[auto_1fr] items-start gap-2">
               <ThemeSwitcher />
-              <LanguageSwitcher />
+              <LanguageSwitcher layout="inline" />
             </div>
           </nav>
         </div>

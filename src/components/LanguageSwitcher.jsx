@@ -9,13 +9,35 @@ const LOCALE_NAMES = {
   sr: 'Srpski',
 };
 
-export function LanguageSwitcher({ className = '' }) {
+function LocaleOption({ code, label, isActive, onSelect, compact = false }) {
+  return (
+    <button
+      type="button"
+      role="option"
+      aria-selected={isActive}
+      onClick={() => onSelect(code)}
+      className={`flex w-full items-center gap-2 px-3 py-2 text-left text-xs transition-colors ${
+        isActive
+          ? 'bg-secondary text-primary'
+          : 'text-foreground/80 hover:bg-secondary hover:text-primary'
+      }`}
+    >
+      {!compact && <span className="w-6 font-semibold tracking-wide">{label}</span>}
+      <span className={compact ? 'font-medium' : 'flex-1 text-muted-foreground'}>
+        {LOCALE_NAMES[code]}
+      </span>
+      {isActive && <Check className="ml-auto size-3.5 shrink-0" aria-hidden="true" />}
+    </button>
+  );
+}
+
+export function LanguageSwitcher({ className = '', layout = 'dropdown' }) {
   const { locale, setLocale } = useLanguage();
   const [open, setOpen] = useState(false);
   const rootRef = useRef(null);
 
   useEffect(() => {
-    if (!open) return undefined;
+    if (!open || layout !== 'dropdown') return undefined;
 
     const onPointerDown = (event) => {
       if (rootRef.current && !rootRef.current.contains(event.target)) {
@@ -33,13 +55,34 @@ export function LanguageSwitcher({ className = '' }) {
       document.removeEventListener('pointerdown', onPointerDown);
       document.removeEventListener('keydown', onKeyDown);
     };
-  }, [open]);
+  }, [open, layout]);
 
   const selectLocale = (code) => {
     setLocale(code);
     trackEvent('language_change', { language: code });
     setOpen(false);
   };
+
+  if (layout === 'inline') {
+    return (
+      <div
+        className={`overflow-hidden rounded-soft border border-border bg-card ${className}`}
+        role="listbox"
+        aria-label="Language"
+      >
+        {Object.entries(LOCALES).map(([code, { label }]) => (
+          <LocaleOption
+            key={code}
+            code={code}
+            label={label}
+            isActive={locale === code}
+            onSelect={selectLocale}
+            compact
+          />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div ref={rootRef} className={`relative ${className}`}>
@@ -62,31 +105,18 @@ export function LanguageSwitcher({ className = '' }) {
         <ul
           role="listbox"
           aria-label="Language"
-          className="absolute right-0 z-50 mt-2 min-w-[9.5rem] overflow-hidden rounded-soft border border-border bg-card py-1 shadow-lg"
+          className="absolute right-0 z-[60] mt-2 w-44 overflow-hidden rounded-soft border border-border bg-card py-1 shadow-lg"
         >
-          {Object.entries(LOCALES).map(([code, { label }]) => {
-            const isActive = locale === code;
-
-            return (
-              <li key={code} role="presentation">
-                <button
-                  type="button"
-                  role="option"
-                  aria-selected={isActive}
-                  onClick={() => selectLocale(code)}
-                  className={`flex w-full items-center gap-2 px-3 py-2 text-left text-xs transition-colors ${
-                    isActive
-                      ? 'bg-secondary text-primary'
-                      : 'text-foreground/80 hover:bg-secondary hover:text-primary'
-                  }`}
-                >
-                  <span className="w-6 font-semibold tracking-wide">{label}</span>
-                  <span className="flex-1 text-muted-foreground">{LOCALE_NAMES[code]}</span>
-                  {isActive && <Check className="size-3.5 shrink-0" aria-hidden="true" />}
-                </button>
-              </li>
-            );
-          })}
+          {Object.entries(LOCALES).map(([code, { label }]) => (
+            <li key={code} role="presentation">
+              <LocaleOption
+                code={code}
+                label={label}
+                isActive={locale === code}
+                onSelect={selectLocale}
+              />
+            </li>
+          ))}
         </ul>
       )}
     </div>
