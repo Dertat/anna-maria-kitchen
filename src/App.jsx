@@ -15,36 +15,23 @@ import { Steps } from './components/Steps';
 import { WeeklyMenu } from './components/WeeklyMenu';
 import { useSmoothAnchors } from './hooks/useSmoothAnchors';
 import { ScrollRevealProvider } from './hooks/useScrollReveal';
-import { INTRO_SEEN_KEY } from './lib/storageKeys';
 import { useTheme } from './theme/ThemeProvider';
-
-function hasSeenIntro() {
-  try {
-    return localStorage.getItem(INTRO_SEEN_KEY) === '1';
-  } catch {
-    return false;
-  }
-}
 
 export default function App() {
   const { theme } = useTheme();
-  const [pageReady, setPageReady] = useState(hasSeenIntro);
-  const [showCurtain, setShowCurtain] = useState(() => !hasSeenIntro());
+  const [pageReady, setPageReady] = useState(false);
+  const [showCurtain, setShowCurtain] = useState(true);
 
   const onIntroReady = useCallback(() => setPageReady(true), []);
   const onCurtainRemoved = useCallback(() => {
-    try {
-      localStorage.setItem(INTRO_SEEN_KEY, '1');
-    } catch {
-      // ignore
-    }
     setShowCurtain(false);
   }, []);
 
   useEffect(() => {
     document.body.classList.toggle('is-loading', !pageReady);
     document.body.classList.toggle('is-ready', pageReady);
-  }, [pageReady]);
+    document.body.classList.toggle('curtain-active', showCurtain);
+  }, [pageReady, showCurtain]);
 
   useSmoothAnchors();
 

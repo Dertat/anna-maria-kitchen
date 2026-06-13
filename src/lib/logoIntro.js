@@ -47,20 +47,27 @@ export function initLogoIntro(container, options = {}) {
     }
 
     if (titleText) {
-      gsap.set(titleText, { opacity: 0, y: 24, transformOrigin: 'center center' });
+      gsap.set(titleText, { opacity: 0 });
     }
     if (subtitleText) {
-      gsap.set(subtitleText, { opacity: 0, y: 20, transformOrigin: 'center center' });
+      gsap.set(subtitleText, { opacity: 0 });
     }
 
-    const tl = gsap.timeline({ paused: !autoplay, onComplete });
+    const tl = gsap.timeline({
+      paused: !autoplay,
+      onComplete: () => {
+        if (titleText) gsap.set(titleText, { clearProps: 'all' });
+        if (subtitleText) gsap.set(subtitleText, { clearProps: 'all' });
+        onComplete?.();
+      },
+    });
 
     if (titleText) {
-      tl.to(titleText, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.12);
+      tl.to(titleText, { opacity: 1, duration: 0.55, ease: 'power2.out' }, 0.12);
     }
 
     if (subtitleText) {
-      tl.to(subtitleText, { opacity: 1, y: 0, duration: 0.55, ease: 'power2.out' }, 0.28);
+      tl.to(subtitleText, { opacity: 1, duration: 0.55, ease: 'power2.out' }, 0.28);
     }
 
     return { timeline: tl, play: () => tl.play() };

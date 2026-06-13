@@ -43,6 +43,11 @@
         document.documentElement.classList.add(theme === 'dark' ? 'dark' : 'light');
       })();
     </script>
+    <script>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+    </script>
   </head>
   <body class="is-loading">
     <div id="root"></div>

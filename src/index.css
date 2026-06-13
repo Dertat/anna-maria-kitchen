@@ -139,6 +139,7 @@
   }
   html {
     @apply font-sans scroll-smooth;
+    scrollbar-gutter: stable;
   }
   body {
     @apply bg-background text-foreground antialiased;
@@ -317,6 +318,10 @@ body.is-loading {
   overflow: hidden;
 }
 
+body.curtain-active {
+  overflow: hidden;
+}
+
 body.is-loading main {
   visibility: hidden;
 }
@@ -344,8 +349,9 @@ body.is-ready .site-header {
   align-items: center;
   justify-content: center;
   background: var(--curtain-bg);
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0);
   transition: transform 1.15s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform;
 }
 
 .curtain__skip {
@@ -353,7 +359,7 @@ body.is-ready .site-header {
 }
 
 .curtain.is-done {
-  transform: translateY(100%);
+  transform: translate3d(0, 100%, 0);
   pointer-events: none;
 }
 
