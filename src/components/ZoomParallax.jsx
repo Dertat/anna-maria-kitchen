@@ -22,7 +22,8 @@ function lerp(from, to, progress) {
 }
 
 function getFlyProgress(scroll, index) {
-  const start = SPREAD_SCROLL_START + index * STAGGER_STEP;
+  // Верх стопки (больший index) улетает первым — как снятие карты с колоды
+  const start = SPREAD_SCROLL_START + (MAX_IMAGES - 1 - index) * STAGGER_STEP;
   const end = SPREAD_SCROLL_END;
 
   if (scroll <= start) return 0;
@@ -101,8 +102,14 @@ function ParallaxLayer({ image, index, scrollYProgress }) {
     const zoom = ((scroll - SPREAD_SCROLL_END) / (1 - SPREAD_SCROLL_END)) * 0.06;
     return 1 + zoom;
   });
-  const layerZ = index + 1;
-  const layerDepth = index * 2;
+  const layerZ = useTransform(flyProgress, (progress) => {
+    if (progress <= 0) return index + 1;
+    return MAX_IMAGES * 2 + index + 1;
+  });
+  const layerDepth = useTransform(flyProgress, (progress) => {
+    if (progress <= 0) return index * 2;
+    return index * 2 + progress * MAX_IMAGES * 4;
+  });
 
   return (
     <motion.div
