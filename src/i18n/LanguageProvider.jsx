@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
-import { SITE } from '@/data/site';
+import { SITE, siteAsset } from '@/data/site';
 import en from './locales/en';
 import ru from './locales/ru';
 import sr from './locales/sr';
@@ -104,11 +104,13 @@ export function LanguageProvider({ children }) {
     setMetaProperty('og:title', messages.meta.title);
     setMetaProperty('og:description', messages.meta.description);
     setMetaProperty('og:url', SITE.url);
-    setMetaProperty('og:image', `${SITE.url}/images/hero-table.webp`);
+    setMetaProperty('og:image', siteAsset(SITE.ogImage));
+    setMetaProperty('og:image:width', '1200');
+    setMetaProperty('og:image:height', '630');
     setMetaProperty('og:locale', messages.meta.ogLocale);
     setMetaName('twitter:title', messages.meta.title);
     setMetaName('twitter:description', messages.meta.description);
-    setMetaName('twitter:image', `${SITE.url}/images/hero-table.webp`);
+    setMetaName('twitter:image', siteAsset(SITE.ogImage));
     setCanonical(SITE.url);
     setHreflangAlternates(SITE.url);
   }, [messages]);

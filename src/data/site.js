@@ -1,7 +1,12 @@
 export const SITE = {
   url: import.meta.env.VITE_SITE_URL || 'https://anna-maria-kitchen.onrender.com',
   name: 'Anna-Maria Kitchen',
+  ogImage: '/images/og.jpg',
 };
+
+export function siteAsset(path) {
+  return `${SITE.url}${path}`;
+}
 
 export const LINKS = {
   instagram: 'https://www.instagram.com/anna_maria.kitchen/',

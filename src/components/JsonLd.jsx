@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { LINKS, SITE } from '@/data/site';
+import { LINKS, SITE, siteAsset } from '@/data/site';
 import { useLanguage } from '@/i18n/LanguageProvider';
 
 export function JsonLd() {
@@ -11,7 +11,7 @@ export function JsonLd() {
       '@type': 'FoodEstablishment',
       name: SITE.name,
       url: SITE.url,
-      image: `${SITE.url}/images/hero-table.webp`,
+      image: siteAsset(SITE.ogImage),
       description: messages.meta.description,
       servesCuisine: ['Russian', 'European', 'Homemade'],
       address: {

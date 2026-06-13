@@ -28,6 +28,7 @@ npm run preview
 | Ссылки Instagram / Telegram | `src/data/site.js` |
 | Фото галереи | `public/assets/instagram/` + `posts.json` |
 | Hero / About фото | `public/images/hero-table.webp`, `about-chef.webp` |
+| Превью для ссылок (OG) | `public/images/og.jpg` — пересобрать: `npm run generate:og` |
 
 ### Галерея Instagram
 
