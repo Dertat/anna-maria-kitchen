@@ -100,9 +100,9 @@ export function SiteHeader() {
                 {t('nav.order')}
               </a>
             </div>
-            <div className="mt-2 grid grid-cols-[auto_1fr] items-start gap-2">
+            <div className="mt-2 flex items-center gap-2">
               <ThemeSwitcher />
-              <LanguageSwitcher layout="inline" />
+              <LanguageSwitcher />
             </div>
           </nav>
         </div>
