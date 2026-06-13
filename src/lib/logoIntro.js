@@ -29,13 +29,7 @@ export function initLogoIntro(container, options = {}) {
   const title = svg.querySelector('#layer-title');
   const subtitle = svg.querySelector('#layer-subtitle');
 
-  const ready = Promise.all([
-    fetchSvgFragment(`${LAYERS}layer_anna_maria_flat.svg`).then((html) => { title.innerHTML = html; }),
-    fetchSvgFragment(`${LAYERS}layer_kitchen_flat.svg`).then((html) => { subtitle.innerHTML = html; }),
-  ]).then(() => {
-    svg.querySelectorAll('text').forEach((el) => el.removeAttribute('fill'));
-    return runAnimation();
-  });
+  let animationControl = null;
 
   function runAnimation() {
     const titleText = title.querySelector('text');
@@ -72,10 +66,25 @@ export function initLogoIntro(container, options = {}) {
     return { timeline: tl, play: () => tl.play() };
   }
 
+  const ready = Promise.all([
+    fetchSvgFragment(`${LAYERS}layer_anna_maria_flat.svg`).then((html) => { title.innerHTML = html; }),
+    fetchSvgFragment(`${LAYERS}layer_kitchen_flat.svg`).then((html) => { subtitle.innerHTML = html; }),
+  ]).then(() => {
+    svg.querySelectorAll('text').forEach((el) => el.removeAttribute('fill'));
+    animationControl = runAnimation();
+    return animationControl;
+  });
+
   ready.catch(() => {
     container.innerHTML = `<img src="/assets/logo-flat.png?v=24" alt="Anna-Maria kitchen" class="curtain__logo" width="520" height="520">`;
     onComplete?.();
   });
 
-  return { ready };
+  return {
+    ready,
+    skip() {
+      animationControl?.timeline?.kill();
+      gsap.killTweensOf(container);
+    },
+  };
 }

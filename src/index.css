@@ -232,6 +232,10 @@ body.is-ready .site-header {
   transition: transform 1.15s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
+.curtain__skip {
+  color: var(--foreground);
+}
+
 .curtain.is-done {
   transform: translateY(100%);
   pointer-events: none;

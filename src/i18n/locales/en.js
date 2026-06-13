@@ -3,7 +3,7 @@ export default {
     lang: 'en',
     title: 'Anna-Maria Kitchen — Meal Delivery · Belgrade',
     description:
-      'Ready-made meal delivery in Belgrade. Meal plans for 2, 6, 12, and 18 days — from 2000 RSD/day. Order via Telegram.',
+      'Ready-made meal delivery in Belgrade. Meal plans for 2, 6, 12, and 18 days — from 2000 RSD/day. Order on the website or via Telegram.',
     ogLocale: 'en_US',
   },
   theme: {
@@ -13,6 +13,9 @@ export default {
   },
   backToTop: {
     label: 'Back to top',
+  },
+  intro: {
+    skip: 'Skip',
   },
   nav: {
     menu: 'Menu',
@@ -57,11 +60,12 @@ export default {
   steps: {
     eyebrow: 'How to order',
     title: 'Three simple steps',
-    subtitle: 'From your first message to regular delivery — without the hassle.',
+    subtitle: 'From your website request to regular delivery — three simple steps.',
     items: [
       {
-        title: 'Message us',
-        description: 'Instagram Direct or Telegram — tell us which meal plan you need.',
+        title: 'Place your order',
+        description:
+          'Fill out the form on our website — we open Telegram with your request ready to send. Or message us on Instagram.',
       },
       {
         title: 'We coordinate',
@@ -144,7 +148,8 @@ export default {
     toastSuccess: 'Telegram opened — send the message.',
   },
   footer: {
-    tagline: 'Ready-made meal delivery in Belgrade. Meal plans for 2, 6, 12, and 18 days — from 2000 RSD/day.',
+    tagline:
+      'Ready-made meal delivery in Belgrade. Meal plans for 2, 6, 12, and 18 days — from 2000 RSD/day. Order on the website.',
     perDayShort: 'day',
     sections: 'Sections',
     plans: 'Meal plans',
