@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { LINKS, telegramOrderUrl } from '@/data/site';
 import { useLanguage } from '@/i18n/LanguageProvider';
+import { consumePresetService } from '@/lib/storageKeys';
 
 export function Contact() {
   const { t, messages } = useLanguage();
@@ -16,6 +17,23 @@ export function Contact() {
     service: '',
     message: '',
   });
+
+  useEffect(() => {
+    const applyPreset = () => {
+      const preset = consumePresetService();
+      if (preset) {
+        setForm((prev) => ({ ...prev, service: preset }));
+      }
+    };
+
+    applyPreset();
+    window.addEventListener('hashchange', applyPreset);
+    window.addEventListener('contact-preset', applyPreset);
+    return () => {
+      window.removeEventListener('hashchange', applyPreset);
+      window.removeEventListener('contact-preset', applyPreset);
+    };
+  }, []);
 
   const onChange = (e) => {
     const { name, value } = e.target;

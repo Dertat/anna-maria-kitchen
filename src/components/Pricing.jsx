@@ -1,10 +1,17 @@
 import { Check } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { PRICING_PLANS } from '@/data/pricing';
 import { useLanguage } from '@/i18n/LanguageProvider';
+import { presetContactService } from '@/lib/storageKeys';
 
 export function Pricing() {
   const { t, messages } = useLanguage();
+
+  const plans = PRICING_PLANS.map((pricePlan) => {
+    const localePlan = messages.pricing.plans.find((p) => p.days === pricePlan.days);
+    return { ...localePlan, ...pricePlan };
+  });
 
   return (
     <section id="pricing" className="py-20 lg:py-28">
@@ -21,13 +28,13 @@ export function Pricing() {
           </p>
         </ScrollReveal>
 
-        <ScrollReveal stagger className="mt-14 grid gap-6 lg:grid-cols-3">
-          {messages.pricing.plans.map((plan) => (
+        <ScrollReveal stagger className="mx-auto mt-14 grid max-w-4xl gap-6 sm:grid-cols-2">
+          {plans.map((plan) => (
             <div
               key={plan.days}
               className={`flex flex-col rounded-2xl border p-8 ${
                 plan.popular
-                  ? 'border-brand bg-brand text-brand-fg shadow-2xl shadow-black/20 lg:-mt-4 lg:mb-4'
+                  ? 'border-brand bg-brand text-brand-fg shadow-2xl shadow-black/20'
                   : 'border-border bg-card'
               }`}
             >
@@ -37,12 +44,19 @@ export function Pricing() {
                 </span>
               )}
               <h3
-                className={`font-serif text-2xl font-semibold ${
+                className={`font-serif text-4xl font-semibold leading-none ${
                   plan.popular ? 'text-brand-fg' : 'text-primary'
                 }`}
               >
-                {t('pricing.days', { count: plan.days })}
+                {plan.label}
               </h3>
+              <p
+                className={`mt-3 font-serif text-xl font-medium ${
+                  plan.popular ? 'text-brand-fg/90' : 'text-primary/80'
+                }`}
+              >
+                {t('pricing.perDay', { price: plan.pricePerDay })}
+              </p>
               <p
                 className={`mt-2 text-sm leading-relaxed ${
                   plan.popular ? 'text-brand-fg/70' : 'text-muted-foreground'
@@ -50,7 +64,7 @@ export function Pricing() {
               >
                 {plan.desc}
               </p>
-              <ul className="mt-8 flex flex-col gap-3.5">
+              <ul className="mt-6 flex flex-col gap-3.5">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm">
                     <Check className="mt-0.5 size-4 shrink-0 text-accent" />
@@ -62,6 +76,7 @@ export function Pricing() {
               </ul>
               <a
                 href="#contact"
+                onClick={() => presetContactService(plan.days)}
                 className={buttonVariants({
                   variant: plan.popular ? 'default' : 'outline',
                   className: `mt-8 rounded-full ${

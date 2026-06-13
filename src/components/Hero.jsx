@@ -1,4 +1,5 @@
 import { buttonVariants } from '@/components/ui/button';
+import { OptimizedImage } from '@/components/OptimizedImage';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { useLanguage } from '@/i18n/LanguageProvider';
 
@@ -23,7 +24,7 @@ export function Hero() {
               href="#contact"
               className={buttonVariants({ size: 'lg', className: 'rounded-full px-8' })}
             >
-              {t('hero.ctaDirect')}
+              {t('hero.ctaOrder')}
             </a>
             <a
               href="#menu"
@@ -54,10 +55,11 @@ export function Hero() {
 
         <ScrollReveal variant="scale" className="relative">
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border shadow-2xl shadow-primary/10">
-            <img
-              src="/images/hero-table.png"
+            <OptimizedImage
+              src="/images/hero-table.webp"
               alt={t('hero.imageAlt')}
               className="size-full object-cover"
+              fetchPriority="high"
             />
           </div>
           <div className="absolute -bottom-6 -left-6 hidden rounded-xl border border-border bg-card px-6 py-4 shadow-xl sm:block">

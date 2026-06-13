@@ -12,6 +12,7 @@ export const LOCALES = {
 
 const STORAGE_KEY = 'anna-maria-lang';
 const SUPPORTED = Object.keys(LOCALES);
+const HREFLANG_MAP = { ru: 'ru', en: 'en', sr: 'sr' };
 
 function detectLocale() {
   const stored = localStorage.getItem(STORAGE_KEY);
@@ -53,6 +54,26 @@ function setCanonical(url) {
   el.setAttribute('href', url);
 }
 
+function setHreflangAlternates(url) {
+  document.querySelectorAll('link[data-hreflang]').forEach((el) => el.remove());
+
+  for (const locale of SUPPORTED) {
+    const link = document.createElement('link');
+    link.rel = 'alternate';
+    link.hreflang = HREFLANG_MAP[locale];
+    link.href = url;
+    link.setAttribute('data-hreflang', '1');
+    document.head.appendChild(link);
+  }
+
+  const fallback = document.createElement('link');
+  fallback.rel = 'alternate';
+  fallback.hreflang = 'x-default';
+  fallback.href = url;
+  fallback.setAttribute('data-hreflang', '1');
+  document.head.appendChild(fallback);
+}
+
 function getByPath(obj, path) {
   return path.split('.').reduce((acc, key) => acc?.[key], obj);
 }
@@ -83,12 +104,13 @@ export function LanguageProvider({ children }) {
     setMetaProperty('og:title', messages.meta.title);
     setMetaProperty('og:description', messages.meta.description);
     setMetaProperty('og:url', SITE.url);
-    setMetaProperty('og:image', `${SITE.url}/images/hero-table.png`);
+    setMetaProperty('og:image', `${SITE.url}/images/hero-table.webp`);
     setMetaProperty('og:locale', messages.meta.ogLocale);
     setMetaName('twitter:title', messages.meta.title);
     setMetaName('twitter:description', messages.meta.description);
-    setMetaName('twitter:image', `${SITE.url}/images/hero-table.png`);
+    setMetaName('twitter:image', `${SITE.url}/images/hero-table.webp`);
     setCanonical(SITE.url);
+    setHreflangAlternates(SITE.url);
   }, [messages]);
 
   const t = useCallback(

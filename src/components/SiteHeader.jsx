@@ -51,7 +51,7 @@ export function SiteHeader() {
             rel="noopener"
             className={buttonVariants({ variant: 'outline', className: 'rounded-full px-5' })}
           >
-            Telegram
+            {t('nav.telegram')}
           </a>
           <a href="#contact" className={buttonVariants({ className: 'rounded-full px-6' })}>
             {t('nav.order')}
@@ -82,11 +82,16 @@ export function SiteHeader() {
                 {t(link.key)}
               </a>
             ))}
-            <div className="mt-2 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <ThemeSwitcher />
-                <LanguageSwitcher />
-              </div>
+            <div className="mt-2 flex flex-col gap-2">
+              <a
+                href={LINKS.telegram}
+                target="_blank"
+                rel="noopener"
+                onClick={() => setOpen(false)}
+                className={buttonVariants({ variant: 'outline', className: 'rounded-full' })}
+              >
+                {t('nav.telegram')}
+              </a>
               <a
                 href="#contact"
                 onClick={() => setOpen(false)}
@@ -94,6 +99,10 @@ export function SiteHeader() {
               >
                 {t('nav.order')}
               </a>
+            </div>
+            <div className="mt-2 flex items-center gap-2">
+              <ThemeSwitcher />
+              <LanguageSwitcher />
             </div>
           </nav>
         </div>

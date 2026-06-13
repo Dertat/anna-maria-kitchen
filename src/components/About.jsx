@@ -1,3 +1,4 @@
+import { OptimizedImage } from '@/components/OptimizedImage';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { useLanguage } from '@/i18n/LanguageProvider';
 
@@ -9,8 +10,8 @@ export function About() {
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
         <ScrollReveal variant="left" className="relative">
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border shadow-xl">
-            <img
-              src="/images/about-chef.png"
+            <OptimizedImage
+              src="/images/about-chef.webp"
               alt={t('about.imageAlt')}
               className="size-full object-cover"
               loading="lazy"

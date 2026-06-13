@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { Toaster } from 'sonner';
 import { Analytics } from './components/Analytics';
+import { JsonLd } from './components/JsonLd';
 import { BackToTop } from './components/BackToTop';
 import { About } from './components/About';
 import { Contact } from './components/Contact';
@@ -14,15 +15,31 @@ import { Steps } from './components/Steps';
 import { WeeklyMenu } from './components/WeeklyMenu';
 import { useSmoothAnchors } from './hooks/useSmoothAnchors';
 import { ScrollRevealProvider } from './hooks/useScrollReveal';
+import { INTRO_SEEN_KEY } from './lib/storageKeys';
 import { useTheme } from './theme/ThemeProvider';
+
+function hasSeenIntro() {
+  try {
+    return localStorage.getItem(INTRO_SEEN_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
 
 export default function App() {
   const { theme } = useTheme();
-  const [pageReady, setPageReady] = useState(false);
-  const [showCurtain, setShowCurtain] = useState(true);
+  const [pageReady, setPageReady] = useState(hasSeenIntro);
+  const [showCurtain, setShowCurtain] = useState(() => !hasSeenIntro());
 
   const onIntroReady = useCallback(() => setPageReady(true), []);
-  const onCurtainRemoved = useCallback(() => setShowCurtain(false), []);
+  const onCurtainRemoved = useCallback(() => {
+    try {
+      localStorage.setItem(INTRO_SEEN_KEY, '1');
+    } catch {
+      // ignore
+    }
+    setShowCurtain(false);
+  }, []);
 
   useEffect(() => {
     document.body.classList.toggle('is-loading', !pageReady);
@@ -34,6 +51,7 @@ export default function App() {
   return (
     <>
       <Analytics />
+      <JsonLd />
       {showCurtain && (
         <Curtain onReady={onIntroReady} onRemoved={onCurtainRemoved} />
       )}
