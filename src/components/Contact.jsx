@@ -5,12 +5,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { TelegramIcon } from '@/components/icons/TelegramIcon';
-import { LINKS, telegramOrderUrl } from '@/data/site';
+import { telegramOrderUrl } from '@/data/site';
 import { useLanguage } from '@/i18n/LanguageProvider';
 import { trackEvent, trackGoogleAdsLeadConversion } from '@/lib/analytics';
 import { consumePresetService } from '@/lib/storageKeys';
-import { Instagram } from 'lucide-react';
 
 export function Contact() {
   const { t, messages } = useLanguage();
@@ -97,27 +95,7 @@ export function Contact() {
               {t('contact.subtitle')}
             </p>
 
-            <div className="mt-2 flex flex-col gap-4">
-              <a
-                href={LINKS.instagram}
-                target="_blank"
-                rel="noopener"
-                className="inline-flex items-center gap-2 text-foreground/80 transition-colors hover:text-primary"
-              >
-                <Instagram className="size-4 shrink-0" />
-                @{LINKS.instagramUsername}
-              </a>
-              <a
-                href={LINKS.telegram}
-                target="_blank"
-                rel="noopener"
-                className="inline-flex items-center gap-2 text-foreground/80 transition-colors hover:text-primary"
-              >
-                <TelegramIcon className="size-4 shrink-0" />
-                @{LINKS.telegramUsername}
-              </a>
-              <p className="text-sm text-muted-foreground">{t('contact.location')}</p>
-            </div>
+            <p className="text-sm text-muted-foreground">{t('contact.location')}</p>
           </ScrollReveal>
 
           <ScrollReveal variant="right" as="form" onSubmit={onSubmit} className="flex flex-col gap-5">

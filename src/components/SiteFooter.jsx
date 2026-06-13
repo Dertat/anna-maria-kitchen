@@ -32,26 +32,6 @@ export function SiteFooter() {
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
               {t('footer.tagline')}
             </p>
-            <div className="mt-6 flex gap-4 text-sm">
-              <a
-                href={LINKS.instagram}
-                target="_blank"
-                rel="noopener"
-                className="inline-flex items-center gap-2 transition-colors hover:text-primary"
-              >
-                <Instagram className="size-4 shrink-0" />
-                Instagram
-              </a>
-              <a
-                href={LINKS.telegram}
-                target="_blank"
-                rel="noopener"
-                className="inline-flex items-center gap-2 transition-colors hover:text-primary"
-              >
-                <TelegramIcon className="size-4 shrink-0" />
-                Telegram
-              </a>
-            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-12 sm:grid-cols-3">
