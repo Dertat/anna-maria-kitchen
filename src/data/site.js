@@ -5,6 +5,7 @@ export const SITE = {
 
 export const LINKS = {
   instagram: 'https://www.instagram.com/anna_maria.kitchen/',
+  instagramUsername: 'anna_maria.kitchen',
   telegram: 'https://t.me/anna_maria_belgrade',
   telegramUsername: 'anna_maria_belgrade',
 };

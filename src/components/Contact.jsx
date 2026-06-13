@@ -5,10 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { TelegramIcon } from '@/components/icons/TelegramIcon';
 import { LINKS, telegramOrderUrl } from '@/data/site';
 import { useLanguage } from '@/i18n/LanguageProvider';
 import { trackEvent, trackGoogleAdsLeadConversion } from '@/lib/analytics';
 import { consumePresetService } from '@/lib/storageKeys';
+import { Instagram } from 'lucide-react';
 
 export function Contact() {
   const { t, messages } = useLanguage();
@@ -100,17 +102,19 @@ export function Contact() {
                 href={LINKS.instagram}
                 target="_blank"
                 rel="noopener"
-                className="text-foreground/80 transition-colors hover:text-primary"
+                className="inline-flex items-center gap-2 text-foreground/80 transition-colors hover:text-primary"
               >
-                @anna_maria.kitchen
+                <Instagram className="size-4 shrink-0" />
+                @{LINKS.instagramUsername}
               </a>
               <a
                 href={LINKS.telegram}
                 target="_blank"
                 rel="noopener"
-                className="text-foreground/80 transition-colors hover:text-primary"
+                className="inline-flex items-center gap-2 text-foreground/80 transition-colors hover:text-primary"
               >
-                @anna_maria_belgrade
+                <TelegramIcon className="size-4 shrink-0" />
+                @{LINKS.telegramUsername}
               </a>
               <p className="text-sm text-muted-foreground">{t('contact.location')}</p>
             </div>

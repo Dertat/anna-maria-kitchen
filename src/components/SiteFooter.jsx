@@ -1,8 +1,10 @@
 import { LINKS } from '@/data/site';
 import { PRICING_PLANS, formatRsd } from '@/data/pricing';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { TelegramIcon } from '@/components/icons/TelegramIcon';
 import { useLanguage } from '@/i18n/LanguageProvider';
 import { presetContactService } from '@/lib/storageKeys';
+import { Instagram } from 'lucide-react';
 
 const FOOTER_PLAN_LABELS = {
   2: 'footer.planTrial',
@@ -31,10 +33,22 @@ export function SiteFooter() {
               {t('footer.tagline')}
             </p>
             <div className="mt-6 flex gap-4 text-sm">
-              <a href={LINKS.instagram} target="_blank" rel="noopener" className="hover:text-primary">
+              <a
+                href={LINKS.instagram}
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+              >
+                <Instagram className="size-4 shrink-0" />
                 Instagram
               </a>
-              <a href={LINKS.telegram} target="_blank" rel="noopener" className="hover:text-primary">
+              <a
+                href={LINKS.telegram}
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+              >
+                <TelegramIcon className="size-4 shrink-0" />
                 Telegram
               </a>
             </div>
@@ -78,13 +92,25 @@ export function SiteFooter() {
               </h3>
               <ul className="mt-4 flex flex-col gap-3 text-sm text-muted-foreground">
                 <li>
-                  <a href={LINKS.instagram} target="_blank" rel="noopener" className="hover:text-primary">
-                    @anna_maria.kitchen
+                  <a
+                    href={LINKS.instagram}
+                    target="_blank"
+                    rel="noopener"
+                    className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+                  >
+                    <Instagram className="size-4 shrink-0" />
+                    @{LINKS.instagramUsername}
                   </a>
                 </li>
                 <li>
-                  <a href={LINKS.telegram} target="_blank" rel="noopener" className="hover:text-primary">
-                    @anna_maria_belgrade
+                  <a
+                    href={LINKS.telegram}
+                    target="_blank"
+                    rel="noopener"
+                    className="inline-flex items-center gap-2 transition-colors hover:text-primary"
+                  >
+                    <TelegramIcon className="size-4 shrink-0" />
+                    @{LINKS.telegramUsername}
                   </a>
                 </li>
                 <li>{t('footer.city')}</li>
