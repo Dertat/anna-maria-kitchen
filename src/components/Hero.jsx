@@ -54,7 +54,7 @@ export function Hero() {
         </ScrollReveal>
 
         <ScrollReveal variant="scale" className="relative">
-          <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-border shadow-2xl shadow-primary/10">
+          <div className="relative aspect-[4/5] overflow-hidden rounded-premium border border-border shadow-2xl shadow-primary/10">
             <OptimizedImage
               src="/images/hero-table.webp"
               alt={t('hero.imageAlt')}
@@ -62,7 +62,7 @@ export function Hero() {
               fetchPriority="high"
             />
           </div>
-          <div className="absolute -bottom-6 -left-6 hidden rounded-[1.5rem] border border-border bg-card px-6 py-4 shadow-xl sm:block">
+          <div className="absolute -bottom-6 -left-6 hidden rounded-premium border border-border bg-card px-6 py-4 shadow-xl sm:block">
             <p className="font-serif text-lg font-semibold text-primary">{t('hero.cardTitle')}</p>
             <p className="text-sm text-muted-foreground">{t('hero.cardText')}</p>
           </div>

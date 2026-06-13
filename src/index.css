@@ -49,6 +49,8 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-soft: 1rem;
+  --radius-premium: 1.5rem;
 }
 
 :root,
@@ -270,7 +272,7 @@ body.is-ready .site-header {
 
 /* ── Weekly menu board ── */
 .menu-board {
-  border-radius: 1.25rem;
+  border-radius: var(--radius-premium);
   background: #0f1c2e;
   color: #f0e6d4;
   box-shadow: 0 28px 70px rgba(15, 28, 46, 0.28);

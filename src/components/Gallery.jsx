@@ -56,7 +56,7 @@ export function Gallery() {
                 href={post.url}
                 target="_blank"
                 rel="noopener"
-                className={`group relative overflow-hidden rounded-xl border border-border ${post.span}`}
+                className={`group relative overflow-hidden rounded-premium border border-border ${post.span}`}
               >
                 <img
                   src={`/assets/instagram/${post.file}`}

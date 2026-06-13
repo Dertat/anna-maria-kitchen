@@ -33,7 +33,7 @@ export function Pricing() {
           {plans.map((plan) => (
             <div
               key={plan.days}
-              className={`flex flex-col rounded-2xl border p-8 ${
+              className={`flex flex-col rounded-premium border p-8 ${
                 plan.popular
                   ? 'border-brand bg-brand text-brand-fg shadow-2xl shadow-black/20'
                   : 'border-border bg-card'

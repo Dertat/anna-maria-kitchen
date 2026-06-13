@@ -83,7 +83,7 @@ export function Contact() {
   return (
     <section id="contact" className="py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid gap-12 rounded-2xl border border-border bg-card p-8 lg:grid-cols-2 lg:gap-16 lg:p-12">
+        <div className="grid gap-12 rounded-premium border border-border bg-card p-8 lg:grid-cols-2 lg:gap-16 lg:p-12">
           <ScrollReveal variant="left" className="flex flex-col gap-6">
             <span className="text-xs font-medium uppercase tracking-[0.3em] text-muted-foreground">
               {t('contact.eyebrow')}
@@ -132,7 +132,7 @@ export function Contact() {
                 required
                 value={form.service}
                 onChange={onChange}
-                className="h-10 w-full rounded-lg border border-input bg-card px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
+                className="h-10 w-full rounded-soft border border-input bg-card px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
               >
                 {messages.contact.serviceOptions.map((opt) => (
                   <option key={opt.value} value={opt.value}>
