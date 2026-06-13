@@ -1,0 +1,7 @@
+{
+  "flat": {
+    "whisk_flat.png": { "x": 492, "y": 568, "w": 217, "h": 175 },
+    "spoon_flat.png": { "x": 492, "y": 568, "w": 217, "h": 175 },
+    "composite": "utensils_flat.png"
+  }
+}

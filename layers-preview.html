@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anna-Maria — Layers Animation Preview</title>
+  <link rel="stylesheet" href="logo-intro.css">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      background: #faf6f1;
+    }
+    .stage {
+      width: min(480px, 92vw);
+      aspect-ratio: 1;
+    }
+    button {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #f5f0e8;
+      color: #082d5e;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 24px;
+      font: 500 14px/1 Inter, system-ui, sans-serif;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="stage logo-intro logo-intro--hero" id="stage"></div>
+  <button type="button" id="replay">Повторить</button>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="logo-layers-intro.js?v=24"></script>
+  <script>
+    const stage = document.getElementById('stage');
+    let intro;
+
+    function play() {
+      stage.innerHTML = '';
+      intro = initLogoIntro(stage, { autoplay: true });
+      intro.ready.catch(console.error);
+    }
+
+    document.getElementById('replay').addEventListener('click', play);
+    play();
+  </script>
+</body>
+</html>

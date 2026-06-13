@@ -1,0 +1,26 @@
+<svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Anna-Maria kitchen">
+  <g id="logo-fill">
+    <circle cx="100" cy="100" r="99" fill="#f5f0e8"/>
+  </g>
+  <g id="logo-stroke-group">
+    <circle id="logo-stroke-outer" cx="100" cy="100" r="99" stroke="#1a2840" stroke-width="1.5" fill="none"/>
+    <circle id="logo-stroke-inner" cx="100" cy="100" r="94.5" stroke="#1a2840" stroke-width="0.75" fill="none"/>
+  </g>
+  <g id="logo-utensils">
+    <g id="logo-spoon">
+      <path d="M129 166.5 L100.5 137.5" stroke="#1a2840" stroke-width="2.35" stroke-linecap="round"/>
+      <path d="M100.5 137.5 C106.2 122.8 119.5 117.2 129.2 122.8 C138.2 127.8 136.5 141.2 125.8 143.2 C117.2 144.8 106.8 139.5 100.5 137.5 Z" fill="#1a2840"/>
+    </g>
+    <g id="logo-whisk">
+      <path d="M71 166.5 L99.5 137.5" stroke="#1a2840" stroke-width="2.35" stroke-linecap="round"/>
+      <ellipse cx="79.5" cy="150.5" rx="6.4" ry="2.65" stroke="#1a2840" stroke-width="1.08" fill="none" transform="rotate(-39 79.5 150.5)"/>
+      <ellipse cx="83.8" cy="145" rx="6.1" ry="2.5" stroke="#1a2840" stroke-width="1.08" fill="none" transform="rotate(-39 83.8 145)"/>
+      <ellipse cx="87.8" cy="139.8" rx="5.8" ry="2.35" stroke="#1a2840" stroke-width="1.08" fill="none" transform="rotate(-39 87.8 139.8)"/>
+      <ellipse cx="91.5" cy="135" rx="5.4" ry="2.2" stroke="#1a2840" stroke-width="1.08" fill="none" transform="rotate(-39 91.5 135)"/>
+      <ellipse cx="94.8" cy="130.8" rx="4.9" ry="2" stroke="#1a2840" stroke-width="1.08" fill="none" transform="rotate(-39 94.8 130.8)"/>
+      <ellipse cx="97.5" cy="127.2" rx="4.2" ry="1.75" stroke="#1a2840" stroke-width="1.08" fill="none" transform="rotate(-39 97.5 127.2)"/>
+    </g>
+  </g>
+  <text id="logo-title" x="100" y="76" text-anchor="middle" fill="#1a2840" font-family="'Cormorant Garamond', Georgia, serif" font-size="23.5" font-weight="500">Anna-Maria</text>
+  <text id="logo-subtitle" x="100" y="94" text-anchor="middle" fill="#1a2840" font-family="Inter, system-ui, sans-serif" font-size="9.5" letter-spacing="0.55">kitchen</text>
+</svg>
