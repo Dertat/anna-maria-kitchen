@@ -8,3 +8,11 @@ export const PRICING_PLANS = [
   { days: 12, pricePerDay: 2100, popular: true },
   { days: 18, pricePerDay: 2000 },
 ];
+
+export function formatRsd(amount) {
+  return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+export function planTotal(days, pricePerDay) {
+  return days * pricePerDay;
+}

@@ -1,6 +1,15 @@
 import { LINKS } from '@/data/site';
+import { PRICING_PLANS, formatRsd } from '@/data/pricing';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { useLanguage } from '@/i18n/LanguageProvider';
+import { presetContactService } from '@/lib/storageKeys';
+
+const FOOTER_PLAN_LABELS = {
+  2: 'footer.planTrial',
+  6: 'footer.plan6',
+  12: 'footer.plan12',
+  18: 'footer.plan18',
+};
 
 export function SiteFooter() {
   const { t } = useLanguage();
@@ -48,10 +57,19 @@ export function SiteFooter() {
                 {t('footer.plans')}
               </h3>
               <ul className="mt-4 flex flex-col gap-3 text-sm text-muted-foreground">
-                <li>{t('footer.plan6')}</li>
-                <li>{t('footer.plan12')}</li>
-                <li>{t('footer.plan18')}</li>
-                <li>{t('footer.planTrial')}</li>
+                {PRICING_PLANS.map((plan) => (
+                  <li key={plan.days}>
+                    <a
+                      href="#contact"
+                      onClick={() => presetContactService(plan.days)}
+                      className="transition-colors hover:text-primary"
+                    >
+                      {t(FOOTER_PLAN_LABELS[plan.days])}
+                      {' · '}
+                      {formatRsd(plan.pricePerDay)} RSD/{t('footer.perDayShort')}
+                    </a>
+                  </li>
+                ))}
               </ul>
             </div>
             <div>
@@ -59,8 +77,16 @@ export function SiteFooter() {
                 {t('footer.contacts')}
               </h3>
               <ul className="mt-4 flex flex-col gap-3 text-sm text-muted-foreground">
-                <li>@anna_maria.kitchen</li>
-                <li>@anna_maria_belgrade</li>
+                <li>
+                  <a href={LINKS.instagram} target="_blank" rel="noopener" className="hover:text-primary">
+                    @anna_maria.kitchen
+                  </a>
+                </li>
+                <li>
+                  <a href={LINKS.telegram} target="_blank" rel="noopener" className="hover:text-primary">
+                    @anna_maria_belgrade
+                  </a>
+                </li>
                 <li>{t('footer.city')}</li>
               </ul>
             </div>

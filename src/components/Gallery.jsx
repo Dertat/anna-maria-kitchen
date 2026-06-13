@@ -5,9 +5,9 @@ import { LINKS } from '@/data/site';
 import { useLanguage } from '@/i18n/LanguageProvider';
 
 const GALLERY_SPANS = {
-  'post-03.jpg': 'row-span-2',
-  'post-07.jpg': 'row-span-2',
-  'post-09.jpg': 'row-span-2',
+  'post-03.webp': 'row-span-2',
+  'post-07.webp': 'row-span-2',
+  'post-09.webp': 'row-span-2',
 };
 
 export function Gallery() {

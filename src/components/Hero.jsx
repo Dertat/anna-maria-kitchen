@@ -39,7 +39,7 @@ export function Hero() {
           </div>
           <div className="mt-4 flex flex-wrap items-center gap-8 border-t border-border pt-6">
             <div>
-              <p className="font-serif text-3xl font-semibold text-primary">6–18</p>
+              <p className="font-serif text-3xl font-semibold text-primary">2–18</p>
               <p className="text-sm text-muted-foreground">{t('hero.statDays')}</p>
             </div>
             <div>

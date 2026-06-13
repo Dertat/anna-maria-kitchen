@@ -3,7 +3,7 @@ export default {
     lang: 'en',
     title: 'Anna-Maria Kitchen — Meal Delivery · Belgrade',
     description:
-      'Ready-made meal delivery in Belgrade. Meal plans for 6, 12, and 18 days. Catering. Order via Direct or Telegram.',
+      'Ready-made meal delivery in Belgrade. Meal plans for 2, 6, 12, and 18 days — from 2000 RSD/day. Order via Telegram.',
     ogLocale: 'en_US',
   },
   theme: {
@@ -28,7 +28,7 @@ export default {
     badge: 'Belgrade · delivery every 2 days',
     title: 'Home cooking without the cooking',
     subtitle:
-      'Meal plans for 6, 12, or 18 days. We cook everything ourselves — no ready-made products, with our own bakery and full quality control.',
+      'Meal plans for 2, 6, 12, or 18 days — from 2000 RSD/day. We cook everything ourselves — no ready-made products, with our own bakery and full quality control.',
     ctaOrder: 'Order now',
     ctaMenu: 'Weekly menu',
     statDays: 'days of meals',
@@ -79,6 +79,7 @@ export default {
     subtitle: 'Delivery every 2 days. You can start with a 2-day trial.',
     popular: 'Popular',
     perDay: '{{price}} RSD/day',
+    total: '{{total}} RSD for the program',
     order: 'Order',
     plans: [
       {
@@ -143,7 +144,8 @@ export default {
     toastSuccess: 'Telegram opened — send the message.',
   },
   footer: {
-    tagline: 'Ready-made meal delivery in Belgrade. Meal plans for 6, 12, and 18 days.',
+    tagline: 'Ready-made meal delivery in Belgrade. Meal plans for 2, 6, 12, and 18 days — from 2000 RSD/day.',
+    perDayShort: 'day',
     sections: 'Sections',
     plans: 'Meal plans',
     contacts: 'Contact',

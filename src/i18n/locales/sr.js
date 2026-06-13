@@ -3,7 +3,7 @@ export default {
     lang: 'sr',
     title: 'Anna-Maria Kitchen — Dostava hrane · Beograd',
     description:
-      'Dostava gotove hrane u Beogradu. Obroci na 6, 12 i 18 dana. Ketering. Poručite preko Direct-a ili Telegrama.',
+      'Dostava gotove hrane u Beogradu. Obroci na 2, 6, 12 i 18 dana — od 2000 RSD/dan. Poručite preko Telegrama.',
     ogLocale: 'sr_RS',
   },
   theme: {
@@ -28,7 +28,7 @@ export default {
     badge: 'Beograd · dostava svaka 2 dana',
     title: 'Domaća kuhinja bez kuvanja',
     subtitle:
-      'Obroci na 6, 12 ili 18 dana. Sve pripremamo sami — bez poluproizvoda, sa sopstvenom pekarom i potpunom kontrolom kvaliteta.',
+      'Obroci na 2, 6, 12 ili 18 dana — od 2000 RSD/dan. Sve pripremamo sami — bez poluproizvoda, sa sopstvenom pekarom i potpunom kontrolom kvaliteta.',
     ctaOrder: 'Poruči',
     ctaMenu: 'Nedeljni meni',
     statDays: 'dana obroka',
@@ -79,6 +79,7 @@ export default {
     subtitle: 'Dostava svaka 2 dana. Možete početi sa 2 probna dana.',
     popular: 'Popularno',
     perDay: '{{price}} RSD/dan',
+    total: '{{total}} RSD za program',
     order: 'Poruči',
     plans: [
       {
@@ -143,7 +144,8 @@ export default {
     toastSuccess: 'Telegram je otvoren — pošaljite poruku.',
   },
   footer: {
-    tagline: 'Dostava gotove hrane u Beogradu. Obroci na 6, 12 i 18 dana.',
+    tagline: 'Dostava gotove hrane u Beogradu. Obroci na 2, 6, 12 i 18 dana — od 2000 RSD/dan.',
+    perDayShort: 'dan',
     sections: 'Sekcije',
     plans: 'Obroci',
     contacts: 'Kontakt',

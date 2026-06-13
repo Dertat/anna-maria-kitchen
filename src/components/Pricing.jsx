@@ -1,7 +1,7 @@
 import { Check } from 'lucide-react';
 import { buttonVariants } from '@/components/ui/button';
 import { ScrollReveal } from '@/components/ScrollReveal';
-import { PRICING_PLANS } from '@/data/pricing';
+import { PRICING_PLANS, formatRsd, planTotal } from '@/data/pricing';
 import { useLanguage } from '@/i18n/LanguageProvider';
 import { presetContactService } from '@/lib/storageKeys';
 
@@ -56,6 +56,13 @@ export function Pricing() {
                 }`}
               >
                 {t('pricing.perDay', { price: plan.pricePerDay })}
+              </p>
+              <p
+                className={`mt-1 text-sm ${
+                  plan.popular ? 'text-brand-fg/70' : 'text-muted-foreground'
+                }`}
+              >
+                {t('pricing.total', { total: formatRsd(planTotal(plan.days, plan.pricePerDay)) })}
               </p>
               <p
                 className={`mt-2 text-sm leading-relaxed ${
