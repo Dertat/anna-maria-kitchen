@@ -92,10 +92,9 @@ export function Pricing() {
                   });
                 }}
                 className={buttonVariants({
-                  variant: plan.popular ? 'default' : 'outline',
-                  className: `mt-8 rounded-full ${
-                    plan.popular ? 'bg-accent text-accent-foreground hover:bg-accent/90' : ''
-                  }`,
+                  variant: 'accent',
+                  size: 'lg',
+                  className: 'mt-8 w-full rounded-full',
                 })}
               >
                 {t('pricing.order')}
