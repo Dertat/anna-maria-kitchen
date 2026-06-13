@@ -3,28 +3,6 @@ import { isAnalyticsEnabled, trackSectionView } from '@/lib/analytics';
 
 export function Analytics() {
   useEffect(() => {
-    const id = import.meta.env.VITE_GA_ID;
-    if (!id || document.getElementById('ga-script')) return;
-
-    const script = document.createElement('script');
-    script.id = 'ga-script';
-    script.async = true;
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
-    document.head.appendChild(script);
-
-    window.dataLayer = window.dataLayer || [];
-    function gtag(...args) {
-      window.dataLayer.push(args);
-    }
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', id, {
-      send_page_view: true,
-      anonymize_ip: true,
-    });
-  }, []);
-
-  useEffect(() => {
     if (!isAnalyticsEnabled()) return;
 
     const trackFromHash = () => {
