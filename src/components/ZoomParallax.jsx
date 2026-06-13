@@ -1,11 +1,19 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import {
+  motion,
+  useMotionValue,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from 'framer-motion';
 import { cn } from '@/lib/utils';
 
 const MAX_IMAGES = 16;
 const SPREAD_SCROLL_START = 0.08;
-const SPREAD_SCROLL_END = 0.78;
+const SPREAD_SCROLL_END = 1;
 const STAGGER_STEP = 0.03;
+const SCROLL_TRACK_VH = 340;
 
 function easeOutCubic(t) {
   return 1 - (1 - t) ** 3;
@@ -22,7 +30,6 @@ function lerp(from, to, progress) {
 }
 
 function getFlyProgress(scroll, index) {
-  // Верх стопки (больший index) улетает первым — как снятие карты с колоды
   const start = SPREAD_SCROLL_START + (MAX_IMAGES - 1 - index) * STAGGER_STEP;
   const end = SPREAD_SCROLL_END;
 
@@ -42,7 +49,6 @@ function getScalePop(progress) {
   return Math.sin(progress * Math.PI) * 0.055;
 }
 
-// Финальные позиции: хаос, но внутри экрана (vw/vh от центра, градусы)
 const SPREAD_POSITIONS = [
   { x: -28, y: -24, rotate: -11 },
   { x: 22, y: -26, rotate: 9 },
@@ -74,8 +80,32 @@ function getStackPosition(index) {
   };
 }
 
-function ParallaxLayer({ image, index, scrollYProgress }) {
+function GalleryCard({ image }) {
   const [src, setSrc] = useState(image.src);
+
+  return (
+    <div
+      className={cn(
+        'gallery-card-frame relative aspect-[4/3] h-[18vh] overflow-hidden rounded-premium border border-border sm:h-[20vh] lg:h-[22vh]',
+      )}
+    >
+      <img
+        src={src}
+        alt={image.alt}
+        className="size-full object-cover"
+        loading="eager"
+        decoding="async"
+        onError={() => {
+          if (image.fallback && src !== image.fallback) {
+            setSrc(image.fallback);
+          }
+        }}
+      />
+    </div>
+  );
+}
+
+function ParallaxLayer({ image, index, scrollYProgress }) {
   const stack = getStackPosition(index);
   const spread = SPREAD_POSITIONS[index] ?? SPREAD_POSITIONS[0];
 
@@ -95,12 +125,7 @@ function ParallaxLayer({ image, index, scrollYProgress }) {
   });
   const scale = useTransform(scrollYProgress, (scroll) => {
     const fly = getFlyProgress(scroll, index);
-    const spreadScale = lerp(0.94, 1, easeOutBack(Math.min(1, fly))) + getScalePop(fly);
-
-    if (scroll <= SPREAD_SCROLL_END) return spreadScale;
-
-    const zoom = ((scroll - SPREAD_SCROLL_END) / (1 - SPREAD_SCROLL_END)) * 0.06;
-    return 1 + zoom;
+    return lerp(0.94, 1, easeOutBack(Math.min(1, fly))) + getScalePop(fly);
   });
   const layerZ = useTransform(flyProgress, (progress) => {
     if (progress <= 0) return index + 1;
@@ -123,35 +148,123 @@ function ParallaxLayer({ image, index, scrollYProgress }) {
       }}
       className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 [transform-style:preserve-3d]"
     >
-      <div
-        className={cn(
-          'gallery-card-frame relative aspect-[4/3] h-[18vh] overflow-hidden rounded-premium border border-border sm:h-[20vh] lg:h-[22vh]',
-        )}
-      >
-        <img
-          src={src}
-          alt={image.alt}
-          className="size-full object-cover"
-          loading="eager"
-          decoding="async"
-          onError={() => {
-            if (image.fallback && src !== image.fallback) {
-              setSrc(image.fallback);
-            }
-          }}
-        />
-      </div>
+      <GalleryCard image={image} />
     </motion.div>
+  );
+}
+
+function StaticSpreadLayer({ image, index }) {
+  const spread = SPREAD_POSITIONS[index] ?? SPREAD_POSITIONS[0];
+
+  return (
+    <div
+      style={{
+        transform: `translate(calc(-50% + ${spread.x}vw), calc(-50% + ${spread.y}vh)) rotate(${spread.rotate}deg)`,
+        zIndex: MAX_IMAGES * 2 + index + 1,
+      }}
+      className="absolute left-1/2 top-1/2"
+    >
+      <GalleryCard image={image} />
+    </div>
   );
 }
 
 export function ZoomParallax({ images }) {
   const containerRef = useRef(null);
+  const isCompactRef = useRef(false);
+  const prevScrollRef = useRef(0);
+  const compactPendingRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
+  const [isCompact, setIsCompact] = useState(false);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
+  const committedScroll = useMotionValue(0);
+
+  const requestCompact = (mode) => {
+    if (isCompactRef.current || !containerRef.current) return;
+
+    const container = containerRef.current;
+    compactPendingRef.current = {
+      mode,
+      top: container.offsetTop,
+      removed: container.offsetHeight - window.innerHeight,
+      scrollY: window.scrollY,
+    };
+    isCompactRef.current = true;
+    setIsCompact(true);
+  };
+
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
+    const prev = prevScrollRef.current;
+    const scrollingUp = latest < prev - 0.0005;
+    prevScrollRef.current = latest;
+
+    if (latest > committedScroll.get()) {
+      committedScroll.set(latest);
+    }
+
+    if (
+      !isCompactRef.current &&
+      scrollingUp &&
+      committedScroll.get() >= SPREAD_SCROLL_END
+    ) {
+      requestCompact('scroll-up');
+    }
+  });
+
+  useLayoutEffect(() => {
+    const initial = scrollYProgress.get();
+    prevScrollRef.current = initial;
+
+    if (initial > committedScroll.get()) {
+      committedScroll.set(initial);
+    }
+
+    if (initial >= SPREAD_SCROLL_END && containerRef.current) {
+      const top = containerRef.current.offsetTop;
+      const pastGallery = window.scrollY > top + window.innerHeight;
+      requestCompact(pastGallery ? 'exited' : 'reload');
+    }
+  }, [scrollYProgress, committedScroll]);
+
+  useLayoutEffect(() => {
+    if (!isCompact || !compactPendingRef.current) return;
+
+    const { mode, top, removed, scrollY } = compactPendingRef.current;
+    compactPendingRef.current = null;
+
+    if (mode === 'scroll-up' || mode === 'reload') {
+      window.scrollTo(0, top);
+      return;
+    }
+
+    window.scrollTo(0, Math.max(0, scrollY - removed));
+  }, [isCompact]);
+
+  useEffect(() => {
+    if (isCompact || !containerRef.current) return;
+
+    const container = containerRef.current;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (isCompactRef.current) return;
+
+        const leftDownward =
+          !entry.isIntersecting && entry.boundingClientRect.top < 0;
+
+        if (leftDownward && committedScroll.get() >= SPREAD_SCROLL_END) {
+          requestCompact('exited');
+        }
+      },
+      { threshold: 0 },
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, [isCompact, committedScroll]);
 
   const layers = useMemo(() => images.slice(0, MAX_IMAGES), [images]);
 
@@ -181,18 +294,30 @@ export function ZoomParallax({ images }) {
     );
   }
 
-  return (
-    <div ref={containerRef} className="relative h-[440vh]">
-      <div className="sticky top-0 isolate flex h-screen items-center justify-center overflow-hidden bg-background [perspective:1400px] [transform-style:preserve-3d]">
-        {layers.map((image, index) => (
+  const stage = (
+    <div className="relative isolate flex h-screen items-center justify-center overflow-hidden bg-background [perspective:1400px] [transform-style:preserve-3d]">
+      {layers.map((image, index) =>
+        isCompact ? (
+          <StaticSpreadLayer key={image.src} image={image} index={index} />
+        ) : (
           <ParallaxLayer
             key={image.src}
             image={image}
             index={index}
-            scrollYProgress={scrollYProgress}
+            scrollYProgress={committedScroll}
           />
-        ))}
-      </div>
+        ),
+      )}
+    </div>
+  );
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative"
+      style={{ height: isCompact ? '100vh' : `${SCROLL_TRACK_VH}vh` }}
+    >
+      {isCompact ? stage : <div className="sticky top-0">{stage}</div>}
     </div>
   );
 }
