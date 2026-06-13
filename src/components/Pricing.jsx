@@ -29,21 +29,30 @@ export function Pricing() {
           </p>
         </ScrollReveal>
 
-        <ScrollReveal stagger className="mx-auto mt-14 grid max-w-4xl gap-6 sm:grid-cols-2">
+        <ScrollReveal stagger className="mx-auto mt-14 grid max-w-4xl items-stretch gap-6 sm:grid-cols-2">
           {plans.map((plan) => (
             <div
               key={plan.days}
-              className={`flex flex-col rounded-premium border p-8 ${
+              className={`flex h-full flex-col rounded-premium border p-8 ${
                 plan.popular
                   ? 'border-brand bg-brand text-brand-fg shadow-2xl shadow-black/20'
                   : 'border-border bg-card'
               }`}
             >
-              {plan.popular && (
-                <span className="mb-4 w-fit rounded-full bg-accent px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-accent-foreground">
-                  {t('pricing.popular')}
-                </span>
-              )}
+              <div className="mb-4 flex min-h-7 items-start">
+                {plan.popular ? (
+                  <span className="w-fit rounded-full bg-accent px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider text-accent-foreground">
+                    {t('pricing.popular')}
+                  </span>
+                ) : (
+                  <span
+                    className="invisible w-fit rounded-full px-3 py-1 text-[0.65rem] font-semibold uppercase tracking-wider"
+                    aria-hidden
+                  >
+                    {t('pricing.popular')}
+                  </span>
+                )}
+              </div>
               <h3
                 className={`font-serif text-4xl font-semibold leading-none ${
                   plan.popular ? 'text-brand-fg' : 'text-primary'
@@ -72,7 +81,7 @@ export function Pricing() {
               >
                 {plan.desc}
               </p>
-              <ul className="mt-6 flex flex-col gap-3.5">
+              <ul className="mt-6 flex flex-1 flex-col gap-3.5">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-3 text-sm">
                     <Check className="mt-0.5 size-4 shrink-0 text-accent" />
@@ -94,7 +103,7 @@ export function Pricing() {
                 className={buttonVariants({
                   variant: 'accent',
                   size: 'lg',
-                  className: 'mt-8 w-full rounded-full',
+                  className: 'mt-8 w-full shrink-0 rounded-full',
                 })}
               >
                 {t('pricing.order')}

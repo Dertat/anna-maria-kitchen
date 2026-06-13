@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageProvider';
+import { collapseGalleryTrack } from '@/lib/galleryScroll';
 
 const SHOW_AFTER = 480;
 
@@ -16,7 +17,8 @@ export function BackToTop() {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    collapseGalleryTrack();
+    window.scrollTo({ top: 0, behavior: 'auto' });
   };
 
   return (

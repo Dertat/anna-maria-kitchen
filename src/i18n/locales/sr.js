@@ -63,8 +63,7 @@ export default {
     items: [
       {
         title: 'Poručite',
-        description:
-          'Popunite formu na sajtu — otvorićemo Telegram sa spremnim tekstom. Ili pišite na Instagramu.',
+        description: 'Popunite formu — otvorićemo Telegram sa zahtevom.',
       },
       {
         title: 'Dogovorimo',
@@ -115,7 +114,9 @@ export default {
     eyebrow: 'Galerija',
     title: 'Naša kuhinja',
     subtitle: 'Prava jela iz naše kuhinje — sve pripremamo sami, bez poluproizvoda.',
-    instagramCta: '@anna_maria.kitchen na Instagramu →',
+    instagramTitle: 'Pratite našu kuhinju',
+    instagramSubtitle:
+      'Nova jela, iza scene i sveži meni — svaki dan u feed-u.',
   },
   contact: {
     eyebrow: 'Kontakt',

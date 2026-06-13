@@ -1,4 +1,5 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
 import {
   motion,
   useMotionValue,
@@ -8,12 +9,18 @@ import {
   useTransform,
 } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { GALLERY_COLLAPSE_EVENT } from '@/lib/galleryScroll';
 
 const MAX_IMAGES = 16;
 const SPREAD_SCROLL_START = 0.08;
 const SPREAD_SCROLL_END = 1;
 const STAGGER_STEP = 0.03;
-const SCROLL_TRACK_VH = 340;
+const SCROLL_SPACER_VH = 200;
+const SPREAD_DONE_AT = 0.88;
+
+function getDocumentTop(element) {
+  return element.getBoundingClientRect().top + window.scrollY;
+}
 
 function easeOutCubic(t) {
   return 1 - (1 - t) ** 3;
@@ -78,6 +85,16 @@ function getStackPosition(index) {
     y: Math.sin(angle) * (1.1 + ring * 0.45) + (layer - 1.5) * 0.55,
     rotate: (index - (MAX_IMAGES - 1) / 2) * 3,
   };
+}
+
+function GalleryStageBackdrop() {
+  return (
+    <>
+      <div className="gallery-stage__glow gallery-stage__glow--accent" aria-hidden />
+      <div className="gallery-stage__glow gallery-stage__glow--navy" aria-hidden />
+      <div className="gallery-stage__floor" aria-hidden />
+    </>
+  );
 }
 
 function GalleryCard({ image }) {
@@ -146,125 +163,78 @@ function ParallaxLayer({ image, index, scrollYProgress }) {
         z: layerDepth,
         zIndex: layerZ,
       }}
-      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 [transform-style:preserve-3d]"
+      className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 [transform-style:preserve-3d]"
     >
       <GalleryCard image={image} />
     </motion.div>
   );
 }
 
-function StaticSpreadLayer({ image, index }) {
-  const spread = SPREAD_POSITIONS[index] ?? SPREAD_POSITIONS[0];
-
-  return (
-    <div
-      style={{
-        transform: `translate(calc(-50% + ${spread.x}vw), calc(-50% + ${spread.y}vh)) rotate(${spread.rotate}deg)`,
-        zIndex: MAX_IMAGES * 2 + index + 1,
-      }}
-      className="absolute left-1/2 top-1/2"
-    >
-      <GalleryCard image={image} />
-    </div>
-  );
-}
-
 export function ZoomParallax({ images }) {
   const containerRef = useRef(null);
-  const isCompactRef = useRef(false);
-  const prevScrollRef = useRef(0);
-  const compactPendingRef = useRef(null);
+  const isDoneRef = useRef(false);
+  const prevProgressRef = useRef(0);
   const prefersReducedMotion = useReducedMotion();
-  const [isCompact, setIsCompact] = useState(false);
+  const [isDone, setIsDone] = useState(false);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   });
   const committedScroll = useMotionValue(0);
 
-  const requestCompact = (mode) => {
-    if (isCompactRef.current || !containerRef.current) return;
-
+  const collapseTrack = () => {
     const container = containerRef.current;
-    compactPendingRef.current = {
-      mode,
-      top: container.offsetTop,
-      removed: container.offsetHeight - window.innerHeight,
-      scrollY: window.scrollY,
-    };
-    isCompactRef.current = true;
-    setIsCompact(true);
+    if (!container || isDoneRef.current) return;
+
+    const scrollY = window.scrollY;
+    const containerTop = getDocumentTop(container);
+    const spacerPx = (SCROLL_SPACER_VH / 100) * window.innerHeight;
+    const stickyTravel = scrollY - containerTop;
+
+    if (stickyTravel <= 8 || stickyTravel > spacerPx + 8) return;
+
+    isDoneRef.current = true;
+
+    const html = document.documentElement;
+    const previousScrollBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = 'auto';
+    html.style.overflowAnchor = 'none';
+
+    try {
+      flushSync(() => {
+        setIsDone(true);
+      });
+      window.scrollTo(0, Math.round(containerTop));
+    } finally {
+      html.style.scrollBehavior = previousScrollBehavior;
+      html.style.overflowAnchor = '';
+    }
   };
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    const prev = prevScrollRef.current;
+    const prev = prevProgressRef.current;
     const scrollingUp = latest < prev - 0.0005;
-    prevScrollRef.current = latest;
+    prevProgressRef.current = latest;
 
     if (latest > committedScroll.get()) {
       committedScroll.set(latest);
     }
 
-    if (
-      !isCompactRef.current &&
-      scrollingUp &&
-      committedScroll.get() >= SPREAD_SCROLL_END
-    ) {
-      requestCompact('scroll-up');
+    if (isDoneRef.current || !scrollingUp) return;
+
+    if (committedScroll.get() >= SPREAD_DONE_AT) {
+      collapseTrack();
     }
   });
 
   useLayoutEffect(() => {
     const initial = scrollYProgress.get();
-    prevScrollRef.current = initial;
+    prevProgressRef.current = initial;
 
     if (initial > committedScroll.get()) {
       committedScroll.set(initial);
     }
-
-    if (initial >= SPREAD_SCROLL_END && containerRef.current) {
-      const top = containerRef.current.offsetTop;
-      const pastGallery = window.scrollY > top + window.innerHeight;
-      requestCompact(pastGallery ? 'exited' : 'reload');
-    }
   }, [scrollYProgress, committedScroll]);
-
-  useLayoutEffect(() => {
-    if (!isCompact || !compactPendingRef.current) return;
-
-    const { mode, top, removed, scrollY } = compactPendingRef.current;
-    compactPendingRef.current = null;
-
-    if (mode === 'scroll-up' || mode === 'reload') {
-      window.scrollTo(0, top);
-      return;
-    }
-
-    window.scrollTo(0, Math.max(0, scrollY - removed));
-  }, [isCompact]);
-
-  useEffect(() => {
-    if (isCompact || !containerRef.current) return;
-
-    const container = containerRef.current;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (isCompactRef.current) return;
-
-        const leftDownward =
-          !entry.isIntersecting && entry.boundingClientRect.top < 0;
-
-        if (leftDownward && committedScroll.get() >= SPREAD_SCROLL_END) {
-          requestCompact('exited');
-        }
-      },
-      { threshold: 0 },
-    );
-
-    observer.observe(container);
-    return () => observer.disconnect();
-  }, [isCompact, committedScroll]);
 
   const layers = useMemo(() => images.slice(0, MAX_IMAGES), [images]);
 
@@ -275,9 +245,24 @@ export function ZoomParallax({ images }) {
     });
   }, [layers]);
 
+  useEffect(() => {
+    const onCollapseRequest = () => {
+      if (isDoneRef.current) return;
+      isDoneRef.current = true;
+      flushSync(() => {
+        setIsDone(true);
+      });
+    };
+
+    window.addEventListener(GALLERY_COLLAPSE_EVENT, onCollapseRequest);
+    return () => window.removeEventListener(GALLERY_COLLAPSE_EVENT, onCollapseRequest);
+  }, []);
+
   if (prefersReducedMotion) {
     return (
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 px-6 py-8 lg:grid-cols-3 lg:px-8">
+      <div className="gallery-stage relative isolate overflow-hidden py-8">
+        <GalleryStageBackdrop />
+        <div className="relative z-10 mx-auto grid max-w-7xl grid-cols-2 gap-4 px-6 lg:grid-cols-3 lg:px-8">
         {layers.map((image) => (
           <div
             key={image.src}
@@ -290,34 +275,35 @@ export function ZoomParallax({ images }) {
             />
           </div>
         ))}
+        </div>
       </div>
     );
   }
 
   const stage = (
-    <div className="relative isolate flex h-screen items-center justify-center overflow-hidden bg-background [perspective:1400px] [transform-style:preserve-3d]">
-      {layers.map((image, index) =>
-        isCompact ? (
-          <StaticSpreadLayer key={image.src} image={image} index={index} />
-        ) : (
-          <ParallaxLayer
-            key={image.src}
-            image={image}
-            index={index}
-            scrollYProgress={committedScroll}
-          />
-        ),
-      )}
+    <div className="gallery-stage relative isolate flex h-full items-center justify-center overflow-hidden [perspective:1400px] [transform-style:preserve-3d]">
+      <GalleryStageBackdrop />
+      {layers.map((image, index) => (
+        <ParallaxLayer
+          key={image.src}
+          image={image}
+          index={index}
+          scrollYProgress={committedScroll}
+        />
+      ))}
     </div>
   );
 
   return (
-    <div
-      ref={containerRef}
-      className="relative"
-      style={{ height: isCompact ? '100vh' : `${SCROLL_TRACK_VH}vh` }}
-    >
-      {isCompact ? stage : <div className="sticky top-0">{stage}</div>}
+    <div ref={containerRef} className="relative [overflow-anchor:none]">
+      <div className={cn('h-screen', isDone ? 'relative' : 'sticky top-0')}>{stage}</div>
+      {!isDone && (
+        <div
+          aria-hidden
+          className="pointer-events-none"
+          style={{ height: `${SCROLL_SPACER_VH}vh` }}
+        />
+      )}
     </div>
   );
 }

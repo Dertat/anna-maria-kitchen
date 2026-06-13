@@ -63,8 +63,7 @@ export default {
     items: [
       {
         title: 'Оформите заказ',
-        description:
-          'Заполните форму на сайте — откроем Telegram с готовой заявкой. Или напишите в Instagram.',
+        description: 'Заполните форму — откроем Telegram с заявкой.',
       },
       {
         title: 'Согласуем',
@@ -115,7 +114,9 @@ export default {
     eyebrow: 'Галерея',
     title: 'Наша кухня',
     subtitle: 'Реальные блюда из нашей кухни — всё готовим сами, без полуфабрикатов.',
-    instagramCta: '@anna_maria.kitchen в Instagram →',
+    instagramTitle: 'Следите за нашей кухней',
+    instagramSubtitle:
+      'Новые блюда, закулисье производства и свежее меню — каждый день в ленте.',
   },
   contact: {
     eyebrow: 'Контакты',

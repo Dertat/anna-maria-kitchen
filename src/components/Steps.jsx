@@ -22,11 +22,11 @@ export function Steps() {
           </p>
         </ScrollReveal>
 
-        <ScrollReveal stagger className="mt-14 grid gap-8 sm:grid-cols-3">
+        <ScrollReveal stagger className="mt-14 grid items-stretch gap-8 sm:grid-cols-3">
           {messages.steps.items.map((step, i) => {
             const Icon = stepIcons[i];
             return (
-              <div key={step.title} className="flex flex-col gap-4">
+              <div key={step.title} className="flex h-full flex-col gap-4">
                 <div className="flex items-center gap-4">
                   <div className="flex size-12 items-center justify-center rounded-full bg-accent text-accent-foreground">
                     <Icon className="size-5" />
@@ -36,7 +36,7 @@ export function Steps() {
                   </span>
                 </div>
                 <h3 className="font-serif text-xl font-semibold">{step.title}</h3>
-                <p className="text-sm leading-relaxed text-brand-fg/70">
+                <p className="mt-auto text-sm leading-relaxed text-brand-fg/70">
                   {step.description}
                 </p>
               </div>

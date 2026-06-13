@@ -63,12 +63,11 @@ export default {
     items: [
       {
         title: 'Place your order',
-        description:
-          'Fill out the form on our website — we open Telegram with your request ready to send. Or message us on Instagram.',
+        description: 'Fill out the form — we open Telegram with your request ready.',
       },
       {
         title: 'We coordinate',
-        description: 'We will choose the menu, delivery schedule, and take your preferences into account.',
+        description: 'We choose the menu, schedule, and your preferences.',
       },
       {
         title: 'Receive',
@@ -115,7 +114,9 @@ export default {
     eyebrow: 'Gallery',
     title: 'Our kitchen',
     subtitle: 'Real dishes from our kitchen — everything made in-house, no shortcuts.',
-    instagramCta: '@anna_maria.kitchen on Instagram →',
+    instagramTitle: 'Follow our kitchen',
+    instagramSubtitle:
+      'New dishes, behind-the-scenes, and fresh menus — every day in the feed.',
   },
   contact: {
     eyebrow: 'Contact',
