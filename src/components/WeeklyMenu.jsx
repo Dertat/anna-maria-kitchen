@@ -2,6 +2,7 @@ import { WEEKLY_MENU } from '@/data/weeklyMenu';
 import { LINKS } from '@/data/site';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { useLanguage } from '@/i18n/LanguageProvider';
+import { Instagram } from 'lucide-react';
 
 function MenuDay({ day, items, withBorder }) {
   return (
@@ -39,9 +40,11 @@ export function WeeklyMenu() {
             href={LINKS.instagram}
             target="_blank"
             rel="noopener"
-            className="mt-4 text-sm font-medium text-primary hover:underline"
+            className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary/80"
           >
-            @anna_maria.kitchen →
+            <Instagram className="size-4 shrink-0" />
+            @{LINKS.instagramUsername}
+            <span aria-hidden="true">→</span>
           </a>
         </ScrollReveal>
 
