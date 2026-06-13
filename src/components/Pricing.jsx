@@ -3,6 +3,7 @@ import { buttonVariants } from '@/components/ui/button';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { PRICING_PLANS, formatRsd, planTotal } from '@/data/pricing';
 import { useLanguage } from '@/i18n/LanguageProvider';
+import { trackEvent } from '@/lib/analytics';
 import { presetContactService } from '@/lib/storageKeys';
 
 export function Pricing() {
@@ -83,7 +84,13 @@ export function Pricing() {
               </ul>
               <a
                 href="#contact"
-                onClick={() => presetContactService(plan.days)}
+                onClick={() => {
+                  presetContactService(plan.days);
+                  trackEvent('select_plan', {
+                    plan_days: plan.days,
+                    price_per_day: plan.pricePerDay,
+                  });
+                }}
                 className={buttonVariants({
                   variant: plan.popular ? 'default' : 'outline',
                   className: `mt-8 rounded-full ${

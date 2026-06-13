@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { ScrollReveal } from '@/components/ScrollReveal';
 import { LINKS, telegramOrderUrl } from '@/data/site';
 import { useLanguage } from '@/i18n/LanguageProvider';
+import { trackEvent } from '@/lib/analytics';
 import { consumePresetService } from '@/lib/storageKeys';
 
 export function Contact() {
@@ -62,9 +63,17 @@ export function Contact() {
     const opened = window.open(url, '_blank');
 
     if (opened) {
+      trackEvent('generate_lead', {
+        service: form.service,
+        method: 'telegram',
+      });
       toast.success(t('contact.toastSuccess'));
       setForm({ name: '', contact: '', service: '', message: '' });
     } else {
+      trackEvent('generate_lead', {
+        service: form.service,
+        method: 'telegram',
+      });
       window.location.href = url;
     }
   };

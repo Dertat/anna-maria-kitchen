@@ -46,6 +46,42 @@ Push в `main` → автодеплой. Конфиг: `render.yaml`.
 | `VITE_SITE_URL` | Публичный URL (для canonical, OG, sitemap). При своём домене — обновить здесь |
 | `VITE_GA_ID` | Google Analytics 4, например `G-XXXXXXXXXX` (опционально) |
 
-## Аналитика
+## Аналитика (Google Analytics 4)
 
-Добавьте `VITE_GA_ID` в Render Dashboard → Environment. Скрипт подключится автоматически (`src/components/Analytics.jsx`).
+### 1. Создать свойство GA4
+
+1. Откройте [Google Analytics](https://analytics.google.com/)
+2. **Администратор** → **Создать** → **Свойство**
+3. Название: `Anna-Maria Kitchen`, часовой пояс: Белград
+4. Поток данных → **Веб** → URL: `https://anna-maria-kitchen.onrender.com`
+5. Скопируйте **Идентификатор потока** вида `G-XXXXXXXXXX`
+
+### 2. Добавить на Render
+
+Render Dashboard → **anna-maria-kitchen** → **Environment** → Add Variable:
+
+| Key | Value |
+|-----|-------|
+| `VITE_GA_ID` | `G-XXXXXXXXXX` |
+
+Сохранить → Render пересоберёт сайт автоматически.
+
+### 3. Локальная проверка
+
+```bash
+cp .env.example .env.local
+# вставьте свой G-XXXXXXXXXX в .env.local
+npm run dev
+```
+
+В GA4: **Отчёты** → **В реальном времени** — откройте сайт и проверьте визит.
+
+### Отслеживаемые события
+
+| Событие | Когда |
+|---------|-------|
+| `page_view` | Просмотр секции (#menu, #pricing, …) |
+| `select_plan` | Клик «Заказать» на карточке тарифа |
+| `generate_lead` | Отправка формы → Telegram |
+| `language_change` | Смена языка RU/EN/SR |
+| `click` (outbound) | Клик на Instagram / Telegram |

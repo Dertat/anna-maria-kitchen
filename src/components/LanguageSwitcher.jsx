@@ -1,4 +1,5 @@
 import { LOCALES, useLanguage } from '@/i18n/LanguageProvider';
+import { trackEvent } from '@/lib/analytics';
 
 export function LanguageSwitcher({ className = '' }) {
   const { locale, setLocale } = useLanguage();
@@ -13,7 +14,10 @@ export function LanguageSwitcher({ className = '' }) {
         <button
           key={code}
           type="button"
-          onClick={() => setLocale(code)}
+          onClick={() => {
+            setLocale(code);
+            trackEvent('language_change', { language: code });
+          }}
           className={`rounded-full px-2.5 py-1 text-xs font-semibold tracking-wide transition-colors ${
             locale === code
               ? 'bg-primary text-primary-foreground'
