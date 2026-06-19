@@ -13,7 +13,7 @@ services:
       # Google Analytics 4 measurement ID
       - key: VITE_GA_ID
         value: G-D1SNVZYBNF
-      # Google Ads account ID + lead conversion label (from ads.google.com)
+      # Google Ads — baked into build (redeploy if tags missing on site)
       - key: VITE_GOOGLE_ADS_ID
         value: AW-18236270443
       - key: VITE_GOOGLE_ADS_LEAD_LABEL
