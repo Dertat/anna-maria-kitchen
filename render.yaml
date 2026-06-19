@@ -9,10 +9,10 @@ services:
         value: "22"
       # Public site URL — update when adding a custom domain in Render Dashboard
       - key: VITE_SITE_URL
-        value: https://anna-maria-kitchen.onrender.com
+        value: https://annamariakitchen.rs
       # Google Analytics 4 measurement ID
-      # - key: VITE_GA_ID
-      #   value: G-D1SNVZYBNF
+      - key: VITE_GA_ID
+        value: G-D1SNVZYBNF
       # Google Ads account ID + lead conversion label (from ads.google.com)
       # - key: VITE_GOOGLE_ADS_ID
       #   value: AW-XXXXXXXXXX

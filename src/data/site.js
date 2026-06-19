@@ -1,5 +1,5 @@
 export const SITE = {
-  url: import.meta.env.VITE_SITE_URL || 'https://anna-maria-kitchen.onrender.com',
+  url: import.meta.env.VITE_SITE_URL || 'https://annamariakitchen.rs',
   name: 'Anna-Maria Kitchen',
   ogImage: '/images/og.jpg',
 };

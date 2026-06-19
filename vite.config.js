@@ -2,6 +2,17 @@ import path from 'node:path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+function injectSiteMeta() {
+  const siteUrl = (process.env.VITE_SITE_URL || 'https://annamariakitchen.rs').replace(/\/$/, '');
+
+  return {
+    name: 'inject-site-meta',
+    transformIndexHtml(html) {
+      return html.replaceAll('__SITE_URL__', siteUrl);
+    },
+  };
+}
+
 function injectGoogleTags() {
   return {
     name: 'inject-google-tags',
@@ -42,7 +53,7 @@ function injectGoogleTags() {
 }
 
 export default defineConfig({
-  plugins: [react(), injectGoogleTags()],
+  plugins: [react(), injectSiteMeta(), injectGoogleTags()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

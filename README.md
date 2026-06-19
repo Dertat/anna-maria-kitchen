@@ -2,7 +2,7 @@
 
 Лендинг доставки готовой еды в Белграде (React + Vite + Tailwind).
 
-**Сайт:** https://anna-maria-kitchen.onrender.com
+**Сайт:** https://annamariakitchen.rs
 
 ## Локальная разработка
 
@@ -37,6 +37,50 @@ npm run preview
 2. Добавьте запись в `public/assets/instagram/posts.json`
 3. `"gallery": true` — показывать на сайте; `captions.ru/en/sr` — подписи при наведении
 
+## Домен `annamariakitchen.rs`
+
+Сайт хостится на Render. Код уже использует `https://annamariakitchen.rs` (canonical, OG, sitemap, JSON-LD).
+
+### 1. Render — добавить домен
+
+1. [Render Dashboard](https://dashboard.render.com/) → **anna-maria-kitchen** → **Settings** → **Custom Domains**
+2. **Add Custom Domain** → `annamariakitchen.rs`
+3. Добавьте также `www.annamariakitchen.rs` (опционально, Render перенаправит на основной)
+4. Скопируйте DNS-записи, которые покажет Render
+
+### 2. DNS у регистратора (.rs)
+
+В панели регистратора домена (RNIDS / Registar) создайте записи:
+
+| Тип | Имя | Значение |
+|-----|-----|----------|
+| **A** | `@` (корень) | IP из Render (обычно `216.24.57.1`) |
+| **CNAME** | `www` | `anna-maria-kitchen.onrender.com` |
+
+> Точные значения Render покажет после добавления домена — используйте их.
+
+Проверка DNS: [dnschecker.org](https://dnschecker.org/) — обновление может занять от 15 минут до 48 часов.
+
+### 3. HTTPS
+
+Render выпустит SSL-сертификат автоматически после верификации DNS.
+
+### 4. Переменная окружения
+
+В Render → **Environment** должно быть:
+
+| Key | Value |
+|-----|-------|
+| `VITE_SITE_URL` | `https://annamariakitchen.rs` |
+
+После смены — **Manual Deploy** или push в `main`.
+
+### 5. Google Analytics / Ads
+
+Обновите URL потока данных в GA4 и объявлений Google Ads на `https://annamariakitchen.rs`.
+
+---
+
 ## Деплой (Render)
 
 Push в `main` → автодеплой. Конфиг: `render.yaml`.
@@ -57,7 +101,7 @@ Push в `main` → автодеплой. Конфиг: `render.yaml`.
 1. Откройте [Google Analytics](https://analytics.google.com/)
 2. **Администратор** → **Создать** → **Свойство**
 3. Название: `Anna-Maria Kitchen`, часовой пояс: Белград
-4. Поток данных → **Веб** → URL: `https://anna-maria-kitchen.onrender.com`
+4. Поток данных → **Веб** → URL: `https://annamariakitchen.rs`
 5. Скопируйте **Идентификатор потока** вида `G-XXXXXXXXXX`
 
 ### 2. Добавить на Render
@@ -76,7 +120,7 @@ Render Dashboard → **anna-maria-kitchen** → **Environment** → Add Variable
 
 1. GA4 → **Отчёты** → **В реальном времени** — откройте сайт, подождите 30–60 сек
 2. Или **Администратор** → **DebugView** + URL с параметром:
-   `https://anna-maria-kitchen.onrender.com/?ga_debug=1`
+   `https://annamariakitchen.rs/?ga_debug=1`
 3. Убедитесь, что ID потока в GA4 = **`G-D1SNVZYBNF`**
    (Администратор → Потоки данных → Веб)
 
@@ -127,7 +171,7 @@ npm run dev
 | Цель | Конверсия `Заявка` / `generate_lead` |
 | Гео | **Белград** + 15–20 км |
 | Языки | Русский, Сербский, Английский |
-| URL | `https://anna-maria-kitchen.onrender.com` |
+| URL | `https://annamariakitchen.rs` |
 | Бюджет | **500–1000 RSD/день** для старта |
 
 **Ключевые слова:** `доставка готовой еды белград`, `готовая еда белград`, `meal prep belgrade`, `dostava hrane beograd`
