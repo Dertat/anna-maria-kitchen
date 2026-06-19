@@ -14,12 +14,14 @@ function injectSiteMeta() {
 }
 
 function injectGoogleTags() {
+  const DEFAULT_GA_ID = 'G-D1SNVZYBNF';
+  const DEFAULT_ADS_ID = 'AW-18236270443';
+
   return {
     name: 'inject-google-tags',
     transformIndexHtml(html) {
-      const gaId = process.env.VITE_GA_ID;
-      const adsId = process.env.VITE_GOOGLE_ADS_ID;
-      if (!gaId && !adsId) return html;
+      const gaId = process.env.VITE_GA_ID || DEFAULT_GA_ID;
+      const adsId = process.env.VITE_GOOGLE_ADS_ID || DEFAULT_ADS_ID;
 
       const primaryId = gaId || adsId;
       const configs = [];

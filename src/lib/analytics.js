@@ -1,6 +1,6 @@
-const GA_ID = import.meta.env.VITE_GA_ID;
-const GOOGLE_ADS_ID = import.meta.env.VITE_GOOGLE_ADS_ID;
-const GOOGLE_ADS_LEAD_LABEL = import.meta.env.VITE_GOOGLE_ADS_LEAD_LABEL;
+const GA_ID = import.meta.env.VITE_GA_ID || 'G-D1SNVZYBNF';
+const GOOGLE_ADS_ID = import.meta.env.VITE_GOOGLE_ADS_ID || 'AW-18236270443';
+const GOOGLE_ADS_LEAD_LABEL = import.meta.env.VITE_GOOGLE_ADS_LEAD_LABEL || 'PwViCOjom8IcEOvO3fdD';
 
 export function isAnalyticsEnabled() {
   return Boolean(GA_ID && typeof window !== 'undefined');
