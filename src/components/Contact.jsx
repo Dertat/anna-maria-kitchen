@@ -15,7 +15,7 @@ export function Contact() {
   const [form, setForm] = useState({
     name: '',
     contact: '',
-    service: '',
+    service: '2',
     message: '',
   });
 

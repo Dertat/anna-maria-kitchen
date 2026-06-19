@@ -38,20 +38,19 @@ export function trackLeadSubmission({ service, method = 'telegram' }, callback) 
     return;
   }
 
-  let finished = false;
-  const pending = getGoogleAdsLeadSendTo() ? 2 : 1;
-  let remaining = pending;
+  const debug = new URLSearchParams(window.location.search).has('ga_debug')
+    || new URLSearchParams(window.location.search).has('debug_mode');
 
-  const done = () => {
-    remaining -= 1;
-    if (remaining > 0 || finished) return;
-    finished = true;
-    callback?.();
-  };
+  if (debug) {
+    // eslint-disable-next-line no-console
+    console.info('[analytics] firing generate_lead', { service, method });
+  }
 
-  const beacon = { transport_type: 'beacon', event_callback: done };
-
-  window.gtag('event', 'generate_lead', { service, method, ...beacon });
+  window.gtag('event', 'generate_lead', {
+    service,
+    method,
+    transport_type: 'beacon',
+  });
 
   const sendTo = getGoogleAdsLeadSendTo();
   if (sendTo) {
@@ -59,16 +58,12 @@ export function trackLeadSubmission({ service, method = 'telegram' }, callback) 
       send_to: sendTo,
       value: 1.0,
       currency: 'RSD',
-      ...beacon,
+      transport_type: 'beacon',
     });
   }
 
-  window.setTimeout(() => {
-    if (!finished) {
-      finished = true;
-      callback?.();
-    }
-  }, 1200);
+  // Brief pause so beacon reaches GA4/DebugView before Telegram opens
+  window.setTimeout(() => callback?.(), 600);
 }
 
 export function trackSectionView(sectionId) {

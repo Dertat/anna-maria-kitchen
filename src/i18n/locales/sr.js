@@ -133,7 +133,6 @@ export default {
     messagePlaceholder: 'Želje, alergije, datum',
     submit: 'Pošalji preko Telegrama',
     serviceOptions: [
-      { value: '', label: 'Izaberite' },
       { value: '2', label: '2 probna dana' },
       { value: '6', label: 'Obroci — 6 dana' },
       { value: '12', label: 'Obroci — 12 dana' },

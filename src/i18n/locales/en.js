@@ -133,7 +133,6 @@ export default {
     messagePlaceholder: 'Preferences, allergies, date',
     submit: 'Send via Telegram',
     serviceOptions: [
-      { value: '', label: 'Select' },
       { value: '2', label: '2-day trial' },
       { value: '6', label: 'Meal plan — 6 days' },
       { value: '12', label: 'Meal plan — 12 days' },

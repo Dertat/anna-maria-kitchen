@@ -30,7 +30,8 @@ function injectGoogleTags() {
         configs.push(`gtag('config', '${gaId}', {
         anonymize_ip: true,
         send_page_view: true,
-        debug_mode: new URLSearchParams(location.search).has('ga_debug'),
+        debug_mode: new URLSearchParams(location.search).has('ga_debug')
+          || new URLSearchParams(location.search).has('debug_mode'),
       });`);
       }
 

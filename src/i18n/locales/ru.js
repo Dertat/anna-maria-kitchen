@@ -133,7 +133,6 @@ export default {
     messagePlaceholder: 'Пожелания, аллергии, дата',
     submit: 'Отправить в Telegram',
     serviceOptions: [
-      { value: '', label: 'Выберите' },
       { value: '2', label: 'Пробные 2 дня' },
       { value: '6', label: 'Рацион — 6 дней' },
       { value: '12', label: 'Рацион — 12 дней' },
