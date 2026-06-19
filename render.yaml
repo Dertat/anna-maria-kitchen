@@ -14,10 +14,10 @@ services:
       - key: VITE_GA_ID
         value: G-D1SNVZYBNF
       # Google Ads account ID + lead conversion label (from ads.google.com)
-      # - key: VITE_GOOGLE_ADS_ID
-      #   value: AW-XXXXXXXXXX
-      # - key: VITE_GOOGLE_ADS_LEAD_LABEL
-      #   value: xxxxxxxxxx
+      - key: VITE_GOOGLE_ADS_ID
+        value: AW-18236270443
+      - key: VITE_GOOGLE_ADS_LEAD_LABEL
+        value: PwViCOjom8IcEOvO3fdD
     routes:
       - type: rewrite
         source: /*
