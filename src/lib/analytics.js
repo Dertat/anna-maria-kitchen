@@ -31,6 +31,46 @@ export function trackGoogleAdsLeadConversion(params = {}) {
   });
 }
 
+/** Fire lead + conversion before leaving the page (Telegram redirect). */
+export function trackLeadSubmission({ service, method = 'telegram' }, callback) {
+  if (typeof window.gtag !== 'function') {
+    callback?.();
+    return;
+  }
+
+  let finished = false;
+  const pending = getGoogleAdsLeadSendTo() ? 2 : 1;
+  let remaining = pending;
+
+  const done = () => {
+    remaining -= 1;
+    if (remaining > 0 || finished) return;
+    finished = true;
+    callback?.();
+  };
+
+  const beacon = { transport_type: 'beacon', event_callback: done };
+
+  window.gtag('event', 'generate_lead', { service, method, ...beacon });
+
+  const sendTo = getGoogleAdsLeadSendTo();
+  if (sendTo) {
+    window.gtag('event', 'conversion', {
+      send_to: sendTo,
+      value: 1.0,
+      currency: 'RSD',
+      ...beacon,
+    });
+  }
+
+  window.setTimeout(() => {
+    if (!finished) {
+      finished = true;
+      callback?.();
+    }
+  }, 1200);
+}
+
 export function trackSectionView(sectionId) {
   if (!sectionId || !isAnalyticsEnabled() || typeof window.gtag !== 'function') return;
 
