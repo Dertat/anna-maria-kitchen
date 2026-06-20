@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { isAnalyticsEnabled, trackSectionView } from '@/lib/analytics';
+import { hasAnalyticsConsent } from '@/lib/consent';
 
 export function Analytics() {
   useEffect(() => {
@@ -20,7 +21,7 @@ export function Analytics() {
     const onOutbound = (e) => {
       const link = e.target.closest('a[href^="http"]');
       if (!link || link.hostname === window.location.hostname) return;
-      if (typeof window.gtag !== 'function') return;
+      if (!hasAnalyticsConsent() || typeof window.gtag !== 'function') return;
       window.gtag('event', 'click', {
         event_category: 'outbound',
         event_label: link.hostname,

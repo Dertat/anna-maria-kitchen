@@ -1,22 +1,25 @@
 export function OptimizedImage({
   src,
+  srcSet,
+  sizes,
   webpSrc,
   alt,
   className,
   loading,
   fetchPriority,
 }) {
+  const resolvedSrcSet = srcSet || webpSrc;
+
   return (
-    <picture>
-      {webpSrc && <source srcSet={webpSrc} type="image/webp" />}
-      <img
-        src={src}
-        alt={alt}
-        className={className}
-        loading={loading}
-        fetchPriority={fetchPriority}
-        decoding="async"
-      />
-    </picture>
+    <img
+      src={src}
+      srcSet={resolvedSrcSet}
+      sizes={sizes}
+      alt={alt}
+      className={className}
+      loading={loading}
+      fetchPriority={fetchPriority}
+      decoding="async"
+    />
   );
 }

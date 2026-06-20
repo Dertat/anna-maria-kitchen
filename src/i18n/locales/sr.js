@@ -118,16 +118,45 @@ export default {
     instagramSubtitle:
       'Nova jela, iza scene i sveži meni — svaki dan u feed-u.',
   },
+  testimonials: {
+    eyebrow: 'Utisci',
+    title: 'Šta kažu klijenti',
+    subtitle: 'Iskustva sa probnih dana i redovnih obroka u Beogradu.',
+    items: [
+      {
+        quote:
+          'Probali smo 2 probna dana — sve sveže i sitno. Konačno smo prestali da naručujemo brzu hranu za posao.',
+        name: 'Marija K.',
+        meta: '2 probna dana · Novi Beograd',
+      },
+      {
+        quote:
+          'Dostava svaka dva dana je praktična. Raznovrstan meni, a peciva su poseban plus — kao kod kuće.',
+        name: 'Alexey V.',
+        meta: 'Obroci — 12 dana',
+      },
+      {
+        quote:
+          'Tražili smo bez laktoze — uračunali od prvog dana. Porudžbina preko Telegrama trajala je par minuta.',
+        name: 'Jelena M.',
+        meta: 'Obroci — 6 dana · Dorćol',
+      },
+    ],
+  },
   contact: {
     eyebrow: 'Kontakt',
     title: 'Naručite',
     subtitle:
       'Odgovaramo u roku od jednog dana. Popunite formu — otvorićemo Telegram sa spremnim tekstom zahteva.',
     location: 'Beograd · dostava svaka 2 dana',
+    telegramTitle: 'Telegram',
+    telegramHint: 'Možete nam pisati direktno — bez forme na sajtu.',
+    telegramDirect: 'Pišite na Telegramu',
     name: 'Ime',
     namePlaceholder: 'Vaše ime',
     contact: 'Kontakt',
     contactPlaceholder: '@username ili telefon',
+    contactInvalid: 'Unesite @username na Telegramu ili broj telefona (najmanje 8 cifara)',
     service: 'Usluga',
     message: 'Komentar',
     messagePlaceholder: 'Želje, alergije, datum',
@@ -137,7 +166,6 @@ export default {
       { value: '6', label: 'Obroci — 6 dana' },
       { value: '12', label: 'Obroci — 12 dana' },
       { value: '18', label: 'Obroci — 18 dana' },
-      { value: 'catering', label: 'Ketering' },
     ],
     formGreeting: 'Zdravo! Želim da poručim:',
     formName: 'Ime',
@@ -158,6 +186,41 @@ export default {
     plan18: '18 dana',
     planTrial: '2 probna dana',
     city: 'Beograd',
+    privacy: 'Politika privatnosti',
     copyright: '© {{year}} Anna-Maria Kitchen. Beograd.',
+  },
+  cookies: {
+    title: 'Koristimo kolačiće',
+    text: 'Sajt koristi kolačiće i Google Analytics / Google Ads za analitiku i merenje reklama. Klikom na Prihvati, saglasni ste sa obradom podataka.',
+    accept: 'Prihvati',
+    decline: 'Odbij',
+    privacyLink: 'Detaljnije',
+  },
+  privacy: {
+    title: 'Politika privatnosti',
+    updated: 'Ažurirano: jun 2026',
+    close: 'Zatvori',
+    sections: [
+      {
+        heading: 'Ko smo',
+        body: 'Anna-Maria Kitchen — dostava gotove hrane u Beogradu. Kontakt: Telegram @anna_maria_belgrade, adresa: Prvomajska 57, Beograd.',
+      },
+      {
+        heading: 'Koje podatke prikupljamo',
+        body: 'Kada pošaljete formu, unosite ime i kontakt (Telegram ili telefon) — to se prosleđuje u Telegram radi obrade porudžbine. Uz saglasnost za kolačiće koristimo Google Analytics i Google Ads za statistiku poseta i reklame.',
+      },
+      {
+        heading: 'Kolačići',
+        body: 'Tehnički kolačići: jezik, tema, status uvodne animacije. Analitički kolačići (samo uz saglasnost): Google Analytics (G-D1SNVZYBNF), Google Ads (AW-18236270443). IP adrese su anonimizovane u GA4.',
+      },
+      {
+        heading: 'Pravni osnov i čuvanje',
+        body: 'Obrada porudžbine — izvršenje ugovora. Analitika — vaša saglasnost. Podaci iz forme čuvaju se u Telegram prepisci. Saglasnost za analitiku možete povući brisanjem kolačića u pregledaču.',
+      },
+      {
+        heading: 'Vaša prava',
+        body: 'Možete zatražiti pristup, ispravku ili brisanje ličnih podataka putem Telegrama @anna_maria_belgrade.',
+      },
+    ],
   },
 };

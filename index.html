@@ -3,12 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
     <title>Anna-Maria Kitchen — Доставка готовой еды · Белград</title>
     <meta
       name="description"
       content="Доставка готовой еды в Белграде. Рационы на 2, 6, 12 и 18 дней — от 2000 RSD/день. Заказ на сайте или в Telegram."
     />
     <link rel="canonical" href="__SITE_URL__/" />
+    <link rel="alternate" hreflang="ru" href="__SITE_URL__/" data-hreflang="static" />
+    <link rel="alternate" hreflang="en" href="__SITE_URL__/" data-hreflang="static" />
+    <link rel="alternate" hreflang="sr" href="__SITE_URL__/" data-hreflang="static" />
+    <link rel="alternate" hreflang="x-default" href="__SITE_URL__/" data-hreflang="static" />
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/icons/favicon-32.png" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -26,6 +31,8 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Anna-Maria Kitchen — доставка готовой еды в Белграде" />
     <meta property="og:locale" content="ru_RU" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:locale:alternate" content="sr_RS" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Anna-Maria Kitchen — Доставка готовой еды · Белград" />
     <meta
@@ -33,14 +40,21 @@
       content="Доставка готовой еды в Белграде. Рационы на 2, 6, 12 и 18 дней — от 2000 RSD/день."
     />
     <meta name="twitter:image" content="__SITE_URL__/images/og.jpg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="/images/hero-table-960.webp"
+      imagesrcset="/images/hero-table-640.webp 640w, /images/hero-table-960.webp 960w, /images/hero-table-1400.webp 1400w"
+      imagesizes="(min-width: 1024px) 50vw, 100vw"
+      fetchpriority="high"
     />
     <script>
       (function () {
+        var lang = localStorage.getItem('anna-maria-lang');
+        if (lang === 'en' || lang === 'sr' || lang === 'ru') {
+          document.documentElement.lang = lang;
+        }
         var theme = localStorage.getItem('anna-maria-theme');
         document.documentElement.classList.add(theme === 'dark' ? 'dark' : 'light');
       })();

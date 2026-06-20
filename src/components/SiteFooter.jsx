@@ -96,6 +96,14 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-12 border-t border-border pt-6 text-center text-sm text-muted-foreground">
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event('open-privacy'))}
+            className="underline underline-offset-2 hover:text-primary"
+          >
+            {t('footer.privacy')}
+          </button>
+          <span className="mx-2">·</span>
           {t('footer.copyright', { year: new Date().getFullYear() })}
         </div>
       </ScrollReveal>

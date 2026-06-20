@@ -495,3 +495,7 @@ body.is-ready .site-header {
     border-bottom: none;
   }
 }
+
+.privacy-dialog::backdrop {
+  background: rgb(0 0 0 / 0.5);
+}

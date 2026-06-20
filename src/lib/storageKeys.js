@@ -1,4 +1,5 @@
 export const INTRO_SEEN_KEY = 'anna-maria-intro-seen';
+export const COOKIE_CONSENT_KEY = 'anna-maria-cookie-consent';
 export const PRESET_SERVICE_KEY = 'anna-maria-preset-service';
 
 export function presetContactService(days) {

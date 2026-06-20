@@ -1,13 +1,15 @@
+import { hasAnalyticsConsent } from '@/lib/consent';
+
 const GA_ID = import.meta.env.VITE_GA_ID || 'G-D1SNVZYBNF';
 const GOOGLE_ADS_ID = import.meta.env.VITE_GOOGLE_ADS_ID || 'AW-18236270443';
 const GOOGLE_ADS_LEAD_LABEL = import.meta.env.VITE_GOOGLE_ADS_LEAD_LABEL || 'PwViCOjom8IcEOvO3fdD';
 
 export function isAnalyticsEnabled() {
-  return Boolean(GA_ID && typeof window !== 'undefined');
+  return Boolean(GA_ID && typeof window !== 'undefined' && hasAnalyticsConsent());
 }
 
 export function isGoogleAdsEnabled() {
-  return Boolean(GOOGLE_ADS_ID && typeof window !== 'undefined');
+  return Boolean(GOOGLE_ADS_ID && typeof window !== 'undefined' && hasAnalyticsConsent());
 }
 
 export function getGoogleAdsLeadSendTo() {
@@ -16,14 +18,13 @@ export function getGoogleAdsLeadSendTo() {
 }
 
 export function trackEvent(name, params = {}) {
-  if (typeof window.gtag !== 'function') return;
-  if (!isAnalyticsEnabled() && !isGoogleAdsEnabled()) return;
+  if (!hasAnalyticsConsent() || typeof window.gtag !== 'function') return;
   window.gtag('event', name, params);
 }
 
 export function trackGoogleAdsLeadConversion(params = {}) {
   const sendTo = getGoogleAdsLeadSendTo();
-  if (!sendTo || typeof window.gtag !== 'function') return;
+  if (!sendTo || !hasAnalyticsConsent() || typeof window.gtag !== 'function') return;
 
   window.gtag('event', 'conversion', {
     send_to: sendTo,
@@ -33,7 +34,7 @@ export function trackGoogleAdsLeadConversion(params = {}) {
 
 /** Fire lead + conversion before leaving the page (Telegram redirect). */
 export function trackLeadSubmission({ service, method = 'telegram' }, callback) {
-  if (typeof window.gtag !== 'function') {
+  if (!hasAnalyticsConsent() || typeof window.gtag !== 'function') {
     callback?.();
     return;
   }

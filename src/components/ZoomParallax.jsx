@@ -110,7 +110,7 @@ function GalleryCard({ image }) {
         src={src}
         alt={image.alt}
         className="size-full object-cover"
-        loading="eager"
+        loading="lazy"
         decoding="async"
         onError={() => {
           if (image.fallback && src !== image.fallback) {
@@ -239,13 +239,6 @@ export function ZoomParallax({ images }) {
   const layers = useMemo(() => images.slice(0, MAX_IMAGES), [images]);
 
   useEffect(() => {
-    layers.forEach((image) => {
-      const img = new Image();
-      img.src = image.src;
-    });
-  }, [layers]);
-
-  useEffect(() => {
     const onCollapseRequest = () => {
       if (isDoneRef.current) return;
       isDoneRef.current = true;
@@ -272,6 +265,8 @@ export function ZoomParallax({ images }) {
               src={image.src}
               alt={image.alt}
               className="aspect-[4/3] w-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         ))}

@@ -6,14 +6,18 @@
   "scripts": {
     "dev": "vite",
     "start": "vite",
-    "build": "vite build",
+    "build": "node scripts/generate-sitemap.mjs && vite build",
+    "generate:sitemap": "node scripts/generate-sitemap.mjs",
     "preview": "vite preview",
+    "generate:hero": "node scripts/generate-hero-images.mjs",
     "generate:og": "node scripts/generate-og.mjs",
     "fetch:parallax": "node scripts/fetch-parallax-images.mjs",
     "import:gallery": "node scripts/import-gallery-images.mjs"
   },
   "dependencies": {
     "@base-ui/react": "^1.5.0",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/playfair-display": "^5.2.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.40.0",

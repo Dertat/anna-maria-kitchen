@@ -1,6 +1,7 @@
 import { buttonVariants } from '@/components/ui/button';
 import { OptimizedImage } from '@/components/OptimizedImage';
 import { ScrollReveal } from '@/components/ScrollReveal';
+import { HERO_IMAGE } from '@/data/heroImage';
 import { useLanguage } from '@/i18n/LanguageProvider';
 
 export function Hero() {
@@ -53,7 +54,9 @@ export function Hero() {
         <ScrollReveal variant="scale" className="relative">
           <div className="relative aspect-[4/5] overflow-hidden rounded-premium border border-border shadow-2xl shadow-primary/10">
             <OptimizedImage
-              src="/images/hero-table.webp"
+              src={HERO_IMAGE.src}
+              srcSet={HERO_IMAGE.srcSet}
+              sizes={HERO_IMAGE.sizes}
               alt={t('hero.imageAlt')}
               className="size-full object-cover"
               fetchPriority="high"

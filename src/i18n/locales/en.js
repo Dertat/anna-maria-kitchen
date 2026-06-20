@@ -118,16 +118,45 @@ export default {
     instagramSubtitle:
       'New dishes, behind-the-scenes, and fresh menus — every day in the feed.',
   },
+  testimonials: {
+    eyebrow: 'Reviews',
+    title: 'What clients say',
+    subtitle: 'Real feedback from trial days and ongoing meal plans in Belgrade.',
+    items: [
+      {
+        quote:
+          'We tried the 2-day trial — everything was fresh and filling. Finally stopped ordering fast food for work.',
+        name: 'Maria K.',
+        meta: '2-day trial · New Belgrade',
+      },
+      {
+        quote:
+          'Delivery every two days is convenient. Varied menu, and the bakery items are a real bonus — tastes homemade.',
+        name: 'Alexey V.',
+        meta: '12-day meal plan',
+      },
+      {
+        quote:
+          'Asked for lactose-free options — they got it right from day one. Ordering via Telegram took just a couple of minutes.',
+        name: 'Jelena M.',
+        meta: '6-day meal plan · Dorćol',
+      },
+    ],
+  },
   contact: {
     eyebrow: 'Contact',
     title: 'Place an order',
     subtitle:
       'We reply within a day. Fill out the form — we will open Telegram with your request ready to send.',
     location: 'Belgrade · delivery every 2 days',
+    telegramTitle: 'Telegram',
+    telegramHint: 'You can message us directly — no form required.',
+    telegramDirect: 'Message on Telegram',
     name: 'Name',
     namePlaceholder: 'Your name',
     contact: 'Contact',
     contactPlaceholder: '@username or phone',
+    contactInvalid: 'Enter a Telegram @username or phone number (at least 8 digits)',
     service: 'Service',
     message: 'Comment',
     messagePlaceholder: 'Preferences, allergies, date',
@@ -137,7 +166,6 @@ export default {
       { value: '6', label: 'Meal plan — 6 days' },
       { value: '12', label: 'Meal plan — 12 days' },
       { value: '18', label: 'Meal plan — 18 days' },
-      { value: 'catering', label: 'Catering' },
     ],
     formGreeting: 'Hello! I would like to order:',
     formName: 'Name',
@@ -158,6 +186,41 @@ export default {
     plan18: '18 days',
     planTrial: '2-day trial',
     city: 'Belgrade',
+    privacy: 'Privacy policy',
     copyright: '© {{year}} Anna-Maria Kitchen. Belgrade.',
+  },
+  cookies: {
+    title: 'We use cookies',
+    text: 'This site uses cookies and Google Analytics / Google Ads for analytics and ad measurement. By clicking Accept, you agree to data processing.',
+    accept: 'Accept',
+    decline: 'Decline',
+    privacyLink: 'Learn more',
+  },
+  privacy: {
+    title: 'Privacy policy',
+    updated: 'Updated: June 2026',
+    close: 'Close',
+    sections: [
+      {
+        heading: 'Who we are',
+        body: 'Anna-Maria Kitchen delivers ready-made meals in Belgrade. Contact: Telegram @anna_maria_belgrade, address: Prvomajska 57, Belgrade.',
+      },
+      {
+        heading: 'What we collect',
+        body: 'When you submit the form, you provide your name and contact (Telegram or phone) — this is sent to Telegram to process your order. With cookie consent, we use Google Analytics and Google Ads for visit statistics and advertising.',
+      },
+      {
+        heading: 'Cookies',
+        body: 'Technical cookies: language, theme, intro status. Analytics cookies (only with consent): Google Analytics (G-D1SNVZYBNF), Google Ads (AW-18236270443). IP addresses are anonymized in GA4.',
+      },
+      {
+        heading: 'Legal basis & retention',
+        body: 'Order processing — contract performance. Analytics — your consent. Form data is stored in Telegram chat. You can withdraw analytics consent by clearing cookies in your browser.',
+      },
+      {
+        heading: 'Your rights',
+        body: 'You may request access, correction, or deletion of personal data by messaging Telegram @anna_maria_belgrade.',
+      },
+    ],
   },
 };

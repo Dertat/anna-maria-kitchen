@@ -1,23 +1,29 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Button } from '@/components/ui/button';
+import { TelegramIcon } from '@/components/icons/TelegramIcon';
+import { ScrollReveal } from '@/components/ScrollReveal';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { ScrollReveal } from '@/components/ScrollReveal';
-import { telegramOrderUrl } from '@/data/site';
+import { LINKS, telegramOrderUrl } from '@/data/site';
 import { useLanguage } from '@/i18n/LanguageProvider';
-import { trackLeadSubmission } from '@/lib/analytics';
+import { trackLeadSubmission, trackOutboundLink } from '@/lib/analytics';
 import { consumePresetService } from '@/lib/storageKeys';
+import { isValidContact } from '@/lib/validateContact';
+
+const DEFAULT_SERVICE = '2';
 
 export function Contact() {
   const { t, messages } = useLanguage();
   const [form, setForm] = useState({
     name: '',
     contact: '',
-    service: '2',
+    service: DEFAULT_SERVICE,
     message: '',
   });
+  const [contactError, setContactError] = useState('');
 
   useEffect(() => {
     const applyPreset = () => {
@@ -39,10 +45,18 @@ export function Contact() {
   const onChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+    if (name === 'contact' && contactError) {
+      setContactError('');
+    }
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+
+    if (!isValidContact(form.contact)) {
+      setContactError(t('contact.contactInvalid'));
+      return;
+    }
 
     const serviceLabel =
       messages.contact.serviceOptions.find((opt) => opt.value === form.service)?.label
@@ -65,11 +79,15 @@ export function Contact() {
       const opened = window.open(url, '_blank');
       if (opened) {
         toast.success(t('contact.toastSuccess'));
-        setForm({ name: '', contact: '', service: '', message: '' });
+        setForm({ name: '', contact: '', service: DEFAULT_SERVICE, message: '' });
       } else {
         window.location.href = url;
       }
     });
+  };
+
+  const onTelegramDirect = () => {
+    trackOutboundLink(LINKS.telegram, 'contact_telegram_direct');
   };
 
   return (
@@ -88,6 +106,26 @@ export function Contact() {
             </p>
 
             <p className="text-sm text-muted-foreground">{t('contact.location')}</p>
+
+            <div className="rounded-soft border border-border bg-secondary/40 p-5">
+              <p className="text-sm font-medium text-primary">{t('contact.telegramTitle')}</p>
+              <p className="mt-2 font-medium text-foreground">@{LINKS.telegramUsername}</p>
+              <p className="mt-3 text-sm text-muted-foreground">{t('contact.telegramHint')}</p>
+              <a
+                href={LINKS.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={onTelegramDirect}
+                className={buttonVariants({
+                  variant: 'accent',
+                  size: 'lg',
+                  className: 'mt-4 w-full rounded-full sm:w-auto',
+                })}
+              >
+                <TelegramIcon className="size-4" />
+                {t('contact.telegramDirect')}
+              </a>
+            </div>
           </ScrollReveal>
 
           <ScrollReveal variant="right" as="form" onSubmit={onSubmit} className="flex flex-col gap-5">
@@ -110,28 +148,33 @@ export function Contact() {
                   name="contact"
                   placeholder={t('contact.contactPlaceholder')}
                   required
+                  aria-invalid={Boolean(contactError)}
                   value={form.contact}
                   onChange={onChange}
                 />
+                {contactError ? (
+                  <p className="text-sm text-destructive" role="alert">
+                    {contactError}
+                  </p>
+                ) : null}
               </div>
             </div>
 
             <div className="flex flex-col gap-2">
               <Label htmlFor="service">{t('contact.service')}</Label>
-              <select
+              <Select
                 id="service"
                 name="service"
                 required
                 value={form.service}
                 onChange={onChange}
-                className="h-10 w-full rounded-soft border border-input bg-card px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
               >
                 {messages.contact.serviceOptions.map((opt) => (
                   <option key={opt.value} value={opt.value}>
                     {opt.label}
                   </option>
                 ))}
-              </select>
+              </Select>
             </div>
 
             <div className="flex flex-col gap-2">

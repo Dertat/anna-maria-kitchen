@@ -1,7 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { buttonVariants } from '@/components/ui/button';
 import { useLanguage } from '@/i18n/LanguageProvider';
+import { INTRO_SEEN_KEY } from '@/lib/storageKeys';
 import { initLogoIntro } from '../lib/logoIntro';
+
+function markIntroSeen() {
+  try {
+    localStorage.setItem(INTRO_SEEN_KEY, '1');
+  } catch {
+    /* ignore */
+  }
+}
 
 export function Curtain({ onReady, onRemoved }) {
   const { t } = useLanguage();
@@ -10,11 +19,15 @@ export function Curtain({ onReady, onRemoved }) {
   const introRef = useRef(null);
   const startedRef = useRef(false);
   const skippingRef = useRef(false);
+  const finishedRef = useRef(false);
   const [done, setDone] = useState(false);
   const [removed, setRemoved] = useState(false);
 
   const finishIntro = useCallback(
     (immediate = false) => {
+      if (finishedRef.current) return;
+      finishedRef.current = true;
+      markIntroSeen();
       const delay = immediate ? 0 : 280;
       setTimeout(() => {
         setDone(true);
@@ -38,6 +51,7 @@ export function Curtain({ onReady, onRemoved }) {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (reduced) {
+      markIntroSeen();
       onReady?.();
       setRemoved(true);
       onRemoved?.();
@@ -46,13 +60,16 @@ export function Curtain({ onReady, onRemoved }) {
 
     const container = containerRef.current;
     if (!container) {
-      setTimeout(() => finishIntro(), 900);
-      return;
+      const timer = setTimeout(() => finishIntro(), 900);
+      return () => clearTimeout(timer);
     }
 
     const intro = initLogoIntro(container, { onComplete: () => finishIntro() });
     introRef.current = intro;
     intro.ready.catch(() => finishIntro());
+
+    const safetyTimer = setTimeout(() => finishIntro(), 5000);
+    return () => clearTimeout(safetyTimer);
   }, [onReady, onRemoved, finishIntro]);
 
   useEffect(() => {
